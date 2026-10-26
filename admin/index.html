@@ -1,0 +1,1771 @@
+<!doctype html>
+<html lang="es-CL">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <title>Volkarra Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap"
+    />
+    <link rel="stylesheet" href="hark.css" />
+    <style>
+      :root {
+        --x-bg: #F5F0E6; --x-bg2: #FFFFFF; --x-bg3: #EFE8DA; --x-bone: #1E1E1C; --x-dim: #6E6255;
+        --x-sand: #A8461A; --x-olive: #5B6B3A; --x-olive2: #4A5830; --x-hueso: #F5F0E6; --x-line: #E3D9C6; --x-line2: #CDBFA5; --x-inb: #A39579;
+        --x-orange: #D9622B; --x-orange2: #BF5222; --x-red: #B3261E; --x-red2: #8F1E18; --x-green: #3F6B2A; --x-amber: #8A5A00;
+        --x-shadow: 0 1px 2px rgba(60,45,20,.06), 0 4px 14px rgba(60,45,20,.06);
+        --x-ease: cubic-bezier(.2,.7,.2,1);
+      }
+      html, body { background: var(--x-bg); color: var(--x-bone); }
+      body { font-family: var(--sans); font-size: 15px; line-height: 1.55; }
+      .x-app { max-width: none; padding: 0 0 env(safe-area-inset-bottom); display: block; min-height: 100vh; background: var(--x-bg); color: var(--x-bone); }
+      .x-app *, .x-app *::before, .x-app *::after { box-sizing: border-box; }
+      .x-app a { color: inherit; }
+      .x-app img { display: block; max-width: 100%; }
+      .x-app button, .x-app input, .x-app select, .x-app textarea { font: inherit; color: inherit; }
+      .x-app [hidden] { display: none !important; }
+      .x-h { text-transform: uppercase; letter-spacing: .16em; font-weight: 600; font-size: clamp(20px, 4vw, 28px); line-height: 1.15; margin: 0 0 12px; }
+      .x-muted { color: var(--x-dim); }
+      .x-small { font-size: 13px; }
+
+      .x-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 24px; border: 1px solid var(--x-orange); background: var(--x-orange); color: var(--x-bone); text-transform: uppercase; letter-spacing: .16em; font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; border-radius: 4px; transition: background .2s, border-color .2s, color .2s, opacity .2s; }
+      .x-btn:hover:not(:disabled) { background: var(--x-orange2); border-color: var(--x-orange2); color: #fff; }
+      .x-btn:disabled { opacity: .45; cursor: not-allowed; }
+      .x-btn--ghost { background: #fff; border-color: var(--x-inb); color: var(--x-bone); }
+      .x-btn--ghost:hover:not(:disabled) { background: var(--x-bg3); border-color: var(--x-sand); color: var(--x-bone); }
+      .x-btn--sm { min-height: 44px; padding: 0 14px; font-size: 12px; letter-spacing: .12em; }
+      .x-btn--block { width: 100%; }
+      .x-btn--danger { background: var(--x-red); border-color: var(--x-red); color: #fff; }
+      .x-btn--danger:hover:not(:disabled) { background: var(--x-red2); border-color: var(--x-red2); color: #fff; }
+      .x-btn--olive { background: var(--x-olive); border-color: var(--x-olive); color: var(--x-hueso); }
+      .x-btn--olive:hover:not(:disabled) { background: var(--x-olive2); border-color: var(--x-olive2); color: var(--x-hueso); }
+      .x-icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: 1px solid var(--x-line2); cursor: pointer; color: var(--x-bone); position: relative; padding: 0; border-radius: 2px; }
+      .x-icon:disabled { opacity: .35; cursor: not-allowed; }
+      .x-link { color: var(--x-sand); text-decoration: underline; text-underline-offset: 3px; }
+      .x-app :focus-visible { outline: 2px solid var(--x-sand); outline-offset: 2px; }
+
+      .x-bar { position: sticky; top: 0; z-index: 40; background: var(--x-olive); color: var(--x-hueso); border-bottom: 1px solid var(--x-olive2); box-shadow: 0 1px 6px rgba(40,45,20,.18); }
+      .x-bar__in { display: flex; align-items: center; gap: 12px; height: 60px; max-width: 1200px; margin: 0 auto; padding: 0 12px 0 16px; }
+      .x-logo { display: flex; align-items: center; height: 44px; background: transparent; text-decoration: none; }
+      .x-logo img { height: 40px; width: auto; mix-blend-mode: lighten; }
+      .x-bar__tag { font-size: 12px; text-transform: uppercase; letter-spacing: .2em; color: var(--x-hueso); }
+      .x-bar__r { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+      .x-bar__who { font-size: 12px; color: var(--x-hueso); max-width: 34vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .x-bar .x-btn--ghost { background: transparent; color: var(--x-hueso); border-color: rgba(245,240,230,.6); }
+      .x-bar .x-btn--ghost:hover:not(:disabled) { background: rgba(245,240,230,.14); border-color: var(--x-hueso); color: var(--x-hueso); }
+      .x-bar :focus-visible { outline-color: var(--x-hueso); }
+      @media (max-width: 640px) { .x-bar__tag, .x-bar__who { display: none; } .x-logo img { height: 32px; } }
+
+      .x-form { display: grid; gap: 14px; }
+      .x-row { display: flex; gap: 10px; flex-wrap: wrap; }
+      .x-row > * { flex: 1 1 200px; }
+      .x-field { display: grid; gap: 6px; }
+      .x-field > span { font-size: 12px; text-transform: uppercase; letter-spacing: .14em; color: var(--x-dim); }
+      .x-in { width: 100%; min-height: 48px; padding: 10px 14px; background: #fff; border: 1px solid var(--x-inb); border-radius: 4px; color: var(--x-bone); font-size: 16px; }
+      .x-in::placeholder { color: #8A7E6E; opacity: 1; }
+      .x-in:disabled { background: var(--x-bg3); }
+      textarea.x-in { min-height: 96px; resize: vertical; }
+      select.x-in { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--x-sand) 50%), linear-gradient(135deg, var(--x-sand) 50%, transparent 50%); background-position: calc(100% - 20px) 21px, calc(100% - 15px) 21px; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 36px; }
+      .x-in:focus { border-color: var(--x-orange); outline: none; box-shadow: 0 0 0 3px rgba(217,98,43,.18); }
+      input[type="color"].x-in { padding: 4px; min-height: 48px; cursor: pointer; }
+      .x-msg { margin: 0; font-size: 14px; }
+      .x-msg--ok { color: var(--x-green); }
+      .x-msg--err { color: var(--x-red); }
+      .x-check, .x-switch { display: flex; gap: 10px; align-items: center; min-height: 44px; cursor: pointer; font-size: 14px; color: var(--x-dim); }
+      .x-check input, .x-switch input { width: 20px; height: 20px; accent-color: var(--x-olive); flex: 0 0 auto; }
+      .x-panel { background: var(--x-bg2); border: 1px solid var(--x-line); padding: 20px; border-radius: 8px; box-shadow: var(--x-shadow); }
+      .x-kpi, .x-item, .x-ord, .x-err, .x-scroll { border-radius: 8px; box-shadow: var(--x-shadow); }
+      .x-panel h2 { margin: 0 0 14px; font-size: 13px; text-transform: uppercase; letter-spacing: .18em; color: var(--x-sand); }
+      .x-optlabel { font-size: 12px; text-transform: uppercase; letter-spacing: .16em; color: var(--x-dim); margin: 0 0 6px; }
+      .x-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+      .x-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; min-width: 44px; justify-content: center; padding: 0 12px; border: 1px solid var(--x-line2); background: transparent; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; cursor: pointer; border-radius: 2px; color: var(--x-bone); }
+      .x-chip[aria-pressed="true"] { border-color: var(--x-sand); background: #FBEDE4; color: var(--x-sand); font-weight: 600; }
+      .x-sw { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(30,30,28,.25); }
+      .x-err { padding: 28px; border: 1px solid var(--x-line); background: var(--x-bg2); text-align: center; }
+      .x-pre { white-space: pre-wrap; background: var(--x-bg); border: 1px solid var(--x-line); padding: 16px; font-family: "Geist Mono", monospace; font-size: 13px; word-break: break-all; }
+
+      /* login + mfa */
+      .x-login { max-width: 420px; margin: 40px auto; padding: 0 20px 60px; display: grid; gap: 16px; }
+      .x-login .x-logo { justify-content: center; height: auto; background: var(--x-olive); border-radius: 8px; padding: 14px; box-shadow: var(--x-shadow); }
+      .x-login .x-logo img { height: 84px; }
+      .x-login h1 { margin: 0; text-align: center; font-size: 17px; text-transform: uppercase; letter-spacing: .18em; font-weight: 600; }
+      .x-code { font-family: "Geist Mono", monospace; font-size: 24px; letter-spacing: .4em; text-align: center; }
+      .x-qr { background: #fff; padding: 12px; width: 220px; height: 220px; justify-self: center; border: 1px solid var(--x-line); }
+      .x-qr img { width: 100%; height: 100%; }
+
+      /* panel */
+      .x-adm { display: grid; min-height: calc(100vh - 60px); }
+      @media (min-width: 900px) { .x-adm { grid-template-columns: 220px 1fr; } }
+      .x-side { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: flex; overflow-x: auto; background: var(--x-olive); border-top: 1px solid var(--x-olive2); padding-bottom: env(safe-area-inset-bottom); }
+      .x-side button { flex: 1 0 auto; min-height: 56px; padding: 0 12px; background: none; border: 0; border-top: 3px solid transparent; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--x-hueso); cursor: pointer; }
+      .x-side button:hover { background: rgba(245,240,230,.12); }
+      .x-side button[aria-current="page"] { color: var(--x-olive2); background: var(--x-hueso); border-top-color: var(--x-orange); font-weight: 600; }
+      .x-side :focus-visible { outline-color: var(--x-hueso); outline-offset: -3px; }
+      .x-side button[aria-current="page"]:focus-visible { outline-color: var(--x-olive2); }
+      @media (min-width: 900px) {
+        .x-side { position: sticky; top: 60px; height: calc(100vh - 60px); flex-direction: column; border-top: 0; border-right: 1px solid var(--x-olive2); padding: 16px 0; }
+        .x-side button { flex: 0 0 auto; text-align: left; padding: 0 20px; border-top: 0; border-left: 3px solid transparent; min-height: 48px; }
+        .x-side button[aria-current="page"] { border-left-color: var(--x-orange); }
+      }
+      .x-main { padding: 24px 16px 110px; min-width: 0; }
+      @media (min-width: 900px) { .x-main { padding: 32px 32px 64px; } }
+      .x-adhead { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+      .x-adhead h1 { margin: 0; font-size: 18px; text-transform: uppercase; letter-spacing: .18em; }
+      .x-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 18px; }
+      .x-tools .x-in { flex: 1 1 220px; }
+      .x-kpis { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 24px; }
+      .x-kpi { background: var(--x-bg2); border: 1px solid var(--x-line); padding: 16px; }
+      .x-kpi b { display: block; font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; }
+      .x-kpi span { font-size: 12px; text-transform: uppercase; letter-spacing: .14em; color: var(--x-dim); }
+      .x-list { display: grid; gap: 8px; }
+      .x-item { background: var(--x-bg2); border: 1px solid var(--x-line); padding: 12px; display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center; }
+      .x-item img { width: 56px; height: 70px; object-fit: cover; background: var(--x-bg3); }
+      .x-item h3 { margin: 0; font-size: 14px; text-transform: uppercase; letter-spacing: .08em; }
+      .x-item p { margin: 2px 0 0; font-size: 13px; color: var(--x-dim); }
+      .x-item__act { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+      @media (min-width: 700px) { .x-item { grid-template-columns: auto 1fr auto; } .x-item__act { grid-column: auto; } }
+      .x-badge { display: inline-block; margin-left: 8px; padding: 2px 8px; border: 1px solid var(--x-sand); color: var(--x-sand); font-size: 12px; text-transform: uppercase; letter-spacing: .12em; vertical-align: middle; }
+      .x-vgrid { overflow-x: auto; border: 1px solid var(--x-line); }
+      .x-vgrid table { border-collapse: collapse; width: 100%; }
+      .x-vgrid th, .x-vgrid td { padding: 6px; border-bottom: 1px solid var(--x-line); text-align: left; }
+      .x-vgrid th { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .1em; color: var(--x-dim); white-space: nowrap; }
+      .x-vgrid tr:last-child > * { border-bottom: 0; }
+      .x-vgrid .x-in { min-width: 64px; text-align: center; padding-left: 6px; padding-right: 6px; }
+      .x-vtot { margin: 8px 0 0; font-size: 14px; color: var(--x-dim); }
+      .x-vtot b { color: var(--x-sand); font-variant-numeric: tabular-nums; }
+      .x-ord { background: var(--x-bg2); border: 1px solid var(--x-line); }
+      .x-ord summary { list-style: none; cursor: pointer; padding: 14px; display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; min-height: 56px; }
+      .x-ord summary::-webkit-details-marker { display: none; }
+      .x-ord summary b { letter-spacing: .08em; }
+      .x-ord summary small { color: var(--x-dim); font-size: 13px; }
+      .x-ord__body { border-top: 1px solid var(--x-line); padding: 14px; display: grid; gap: 12px; font-size: 14px; }
+      .x-dl { display: grid; grid-template-columns: 110px 1fr; gap: 6px 12px; margin: 0; }
+      .x-dl dt { color: var(--x-dim); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; padding-top: 2px; }
+      .x-dl dd { margin: 0; word-break: break-word; }
+      .x-sumrow { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; font-size: 14px; border-bottom: 1px solid var(--x-line); }
+      .x-sumrow:last-child { border: 0; font-weight: 600; }
+      .x-st { font-size: 12px; padding: 3px 8px; border: 1px solid var(--x-line2); text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; align-self: start; border-radius: 999px; font-weight: 600; background: var(--x-bg3); color: var(--x-bone); }
+      .x-st--Pagado, .x-st--Enviado { color: #2F5A1E; background: #EAF0DD; border-color: #B9C99A; }
+      .x-st--Entregado { color: #fff; background: var(--x-green); border-color: var(--x-green); }
+      .x-st--Cancelado { color: var(--x-red); background: #FBE9E7; border-color: #E8B4AE; }
+      .x-st--Pendiente { color: var(--x-amber); background: #FBF1D9; border-color: #E6CF95; }
+      .x-st--Archivado { color: var(--x-dim); background: var(--x-bg3); border-color: var(--x-line2); }
+      .x-tbl { width: 100%; border-collapse: collapse; font-size: 14px; }
+      .x-tbl th, .x-tbl td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--x-line); vertical-align: top; }
+      .x-tbl th { font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--x-dim); font-weight: 500; }
+      .x-scroll { overflow-x: auto; border: 1px solid var(--x-line); background: var(--x-bg2); }
+      .x-tbl tbody tr:nth-child(even) { background: #FBF8F2; }
+
+      /* galería */
+      .x-gal { display: flex; flex-wrap: wrap; gap: 10px; }
+      .x-gal__it { width: 104px; border: 1px solid var(--x-line2); background: var(--x-bg); padding: 4px; display: grid; gap: 4px; }
+      .x-gal__it img { width: 100%; height: 118px; object-fit: cover; background: var(--x-bg3); }
+      .x-gal__it.is-main { border-color: var(--x-sand); }
+      .x-gal__ctl { display: flex; gap: 2px; }
+      .x-gal__ctl button { flex: 1; min-height: 36px; background: none; border: 1px solid var(--x-line2); color: var(--x-bone); cursor: pointer; font-size: 13px; padding: 0; }
+      .x-gal__ctl button:disabled { opacity: .3; cursor: not-allowed; }
+      .x-gal__ctl button.is-del { color: var(--x-red); border-color: var(--x-red); }
+      .x-gal__tag { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--x-sand); text-align: center; min-height: 15px; }
+
+      /* personalizar */
+      .x-cols { display: grid; gap: 14px; }
+      @media (min-width: 720px) { .x-cols { grid-template-columns: 1fr 1fr; } }
+      .x-mini { border: 1px solid var(--x-line2); overflow: hidden; }
+      .x-mini__ann { padding: 8px 12px; font-size: 12px; text-transform: uppercase; letter-spacing: .14em; text-align: center; }
+      .x-mini__hero { padding: 28px 16px; display: grid; gap: 8px; justify-items: start; }
+      .x-mini__hero h3 { margin: 0; font-size: 20px; text-transform: uppercase; letter-spacing: .12em; }
+      .x-mini__hero p { margin: 0; font-size: 14px; opacity: .85; }
+      .x-mini__hero span { display: inline-flex; align-items: center; min-height: 40px; padding: 0 18px; font-size: 12px; text-transform: uppercase; letter-spacing: .14em; }
+      .x-mini__logo { max-height: 44px; width: auto; }
+      .x-mini__foot { padding: 10px 12px; font-size: 12px; border-top: 1px solid rgba(255,255,255,.12); opacity: .8; }
+      .x-blk { border: 1px solid var(--x-line2); background: var(--x-bg); padding: 12px; display: grid; gap: 10px; }
+      .x-blk__top { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+      .x-blk__top b { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+      .x-blk__top .x-blk__sp { margin-left: auto; display: flex; gap: 4px; }
+      .x-blk img.x-thumb { width: 120px; height: 72px; object-fit: cover; background: var(--x-bg3); border: 1px solid var(--x-line); }
+      .x-mods { display: grid; gap: 4px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+
+      .x-tabn { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 6px; margin-left: 8px; border-radius: 10px; background: var(--x-orange); color: var(--x-bone); font-size: 11px; font-weight: 600; letter-spacing: 0; vertical-align: middle; }
+      .x-stars { color: var(--x-sand); letter-spacing: .12em; }
+      .x-rv__ph { width: 56px; height: 70px; background: var(--x-bg3); border: 1px solid var(--x-line); display: flex; align-items: center; justify-content: center; text-align: center; font-size: 11px; color: var(--x-dim); }
+      .x-item p.x-rv__c { color: var(--x-bone); white-space: pre-wrap; margin-top: 6px; font-size: 14px; }
+      .x-prog { width: 100%; max-width: 420px; height: 8px; accent-color: var(--x-olive); }
+      .x-vid { width: 100%; max-width: 420px; aspect-ratio: 16 / 9; background: #000; border: 1px solid var(--x-line); }
+      .x-price { margin: 0; font-size: 14px; color: var(--x-dim); }
+      .x-price b { color: var(--x-sand); }
+      .x-btnlink { background: none; border: 0; padding: 0; min-height: 44px; cursor: pointer; font-size: inherit; }
+
+      /* modal */
+      .x-scrim { position: fixed; inset: 0; background: rgba(30,30,28,.45); z-index: 60; opacity: 0; transition: opacity .25s; }
+      .x-scrim.is-on { opacity: 1; }
+      .x-modal { position: fixed; inset: 0; z-index: 80; display: flex; align-items: flex-end; justify-content: center; pointer-events: none; }
+      .x-modal__box { pointer-events: auto; background: var(--x-bg); border: 1px solid var(--x-line); border-radius: 10px 10px 0 0; box-shadow: 0 12px 40px rgba(40,30,15,.22); width: min(760px, 100%); max-height: 92vh; overflow: auto; position: relative; transform: translateY(24px); opacity: 0; transition: transform .3s var(--x-ease), opacity .3s; }
+      .x-modal.is-on .x-modal__box { transform: none; opacity: 1; }
+      @media (min-width: 760px) { .x-modal { align-items: center; padding: 24px; } .x-modal__box { border-radius: 10px; } }
+      .x-modal__close { position: absolute; top: 6px; right: 6px; z-index: 2; background: #fff; }
+      .x-toast { position: fixed; left: 50%; bottom: calc(76px + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 90; background: var(--x-bone); color: var(--x-hueso); padding: 12px 18px; font-size: 14px; max-width: calc(100% - 32px); border-radius: 8px; border-left: 4px solid var(--x-orange); box-shadow: 0 8px 24px rgba(40,30,15,.25); }
+      .x-toast--ok { border-left-color: #9FB46A; }
+      .x-toast--err { background: var(--x-red); color: #fff; border-left-color: var(--x-red2); }
+      .x-seg { display: inline-flex; border: 1px solid var(--x-inb); border-radius: 6px; overflow: hidden; background: #fff; flex: 0 0 auto; }
+      .x-seg button { min-height: 44px; padding: 0 16px; border: 0; background: transparent; font-size: 12px; text-transform: uppercase; letter-spacing: .12em; font-weight: 600; color: var(--x-bone); cursor: pointer; }
+      .x-seg button + button { border-left: 1px solid var(--x-inb); }
+      .x-seg button[aria-pressed="true"] { background: var(--x-olive); color: var(--x-hueso); }
+      .x-seg button span { font-weight: 400; margin-left: 6px; }
+      .x-ord__act { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 12px; border-top: 1px solid var(--x-line); }
+      .x-ord__act .x-btn--danger { margin-left: auto; }
+      .x-ord.is-arch { background: #FBF8F2; }
+      .x-dlg { padding: 28px 24px 24px; display: grid; gap: 14px; }
+      .x-dlg h2 { margin: 0; padding-right: 40px; font-size: 16px; text-transform: uppercase; letter-spacing: .12em; }
+      .x-dlg p { margin: 0; }
+      .x-warn { padding: 12px 14px; border: 1px solid #E8B4AE; border-left: 4px solid var(--x-red); background: #FBE9E7; color: var(--x-red2); font-size: 14px; border-radius: 4px; }
+      .x-dlg__btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+      @media (min-width: 900px) { .x-toast { bottom: 24px; } }
+      .x-foot { padding: 28px 0 40px; text-align: center; }
+      .x-foot p { margin: 0; font-size: 12px; color: var(--x-dim); text-transform: uppercase; letter-spacing: .18em; }
+      @media (prefers-reduced-motion: reduce) { .x-modal__box, .x-scrim { transition: none; } }
+
+      /* móvil */
+      .x-ocard { background: var(--x-bg2); border: 1px solid var(--x-line); border-radius: 8px; box-shadow: var(--x-shadow); padding: 14px; display: grid; gap: 10px; min-width: 0; }
+      .x-ocard.is-arch { background: #FBF8F2; }
+      .x-ocard__top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+      .x-ocard__top b { font-size: 16px; letter-spacing: .08em; }
+      .x-ocard__who { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+      .x-ocard__meta { margin: -6px 0 0; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 13px; color: var(--x-dim); }
+      .x-ocard__meta b { font-size: 16px; color: var(--x-sand); font-variant-numeric: tabular-nums; white-space: nowrap; }
+      .x-ocard__act { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .x-ocard__del { display: flex; justify-content: flex-end; margin-top: 4px; padding-top: 12px; border-top: 1px dashed var(--x-line2); }
+      @media (max-width: 899px) {
+        .x-app { overflow-x: clip; padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+        .x-app .x-in { font-size: 16px; }
+        .x-app .x-code { font-size: 24px; }
+        .x-bar__in { height: 56px; padding: 0 max(12px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left)); }
+        .x-adm { min-height: calc(100vh - 56px); grid-template-columns: minmax(0, 1fr); align-content: start; }
+        .x-side { position: sticky; top: 56px; bottom: auto; left: auto; right: auto; z-index: 35; border-top: 0; border-bottom: 1px solid var(--x-olive2); padding: 0; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: none; -webkit-overflow-scrolling: touch; box-shadow: 0 2px 6px rgba(40,45,20,.14); }
+        .x-side::-webkit-scrollbar { display: none; }
+        .x-side button { flex: 0 0 auto; min-height: 48px; padding: 0 14px; border-top: 0; border-bottom: 3px solid transparent; scroll-snap-align: start; white-space: nowrap; }
+        .x-side button[aria-current="page"] { border-bottom-color: var(--x-orange); }
+        .x-main { padding: 20px 16px calc(32px + env(safe-area-inset-bottom)); }
+        .x-adhead { margin-bottom: 16px; }
+        .x-adhead .x-btn { display: none; }
+        .x-foot { padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
+        .x-toast { bottom: calc(16px + env(safe-area-inset-bottom)); max-width: calc(100% - 32px - env(safe-area-inset-left) - env(safe-area-inset-right)); width: max-content; }
+        .x-modal { padding: env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left); }
+        .x-modal__box { max-height: calc(100vh - env(safe-area-inset-top) - 12px); max-height: calc(100dvh - env(safe-area-inset-top) - 12px); padding-bottom: env(safe-area-inset-bottom); overscroll-behavior: contain; }
+        .x-modal__close { position: sticky; top: 8px; display: flex; width: 48px; height: 48px; margin: 8px 8px -56px auto; font-size: 18px; border-color: var(--x-inb); border-radius: 50%; box-shadow: var(--x-shadow); }
+        .x-modal .x-h { padding-right: 52px; }
+        .x-dlg__btns .x-btn { flex: 1 1 140px; }
+        /* que nada se salga de la pantalla */
+        .x-form, .x-field, .x-dlg, .x-ord__body, .x-list, .x-panel, .x-blk { grid-template-columns: minmax(0, 1fr); }
+        .x-form > *, .x-field > *, .x-main > * { min-width: 0; }
+        .x-main { overflow-wrap: anywhere; }
+        .x-ord__act { gap: 12px; }
+      }
+      @media (max-width: 759px) {
+        .x-modal { padding: 0; }
+        .x-modal__box--sheet { width: 100%; height: 100vh; height: 100dvh; max-height: none; border: 0; border-radius: 0; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+        .x-modal__box--sheet .x-modal__close { top: calc(8px + env(safe-area-inset-top)); }
+      }
+      @media (max-width: 699px) {
+        .x-h { letter-spacing: .1em; }
+        .x-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 20px; }
+        .x-kpi { padding: 14px 12px; min-width: 0; }
+        .x-kpi b { font-size: 20px; overflow-wrap: anywhere; }
+        .x-kpi span { letter-spacing: .08em; }
+        .x-tools { gap: 10px; }
+        .x-tools > * { flex: 1 1 100% !important; width: 100%; }
+        .x-seg { display: flex; }
+        .x-seg button { flex: 1 1 0; padding: 0 8px; }
+        .x-tools .x-chips .x-chip { flex: 1 1 auto; }
+        .x-item { padding: 14px; }
+        .x-item > div { min-width: 0; overflow-wrap: anywhere; }
+        .x-item__act { gap: 10px; padding-top: 10px; border-top: 1px solid var(--x-line); }
+        .x-item__act .x-btn { flex: 1 1 auto; }
+        .x-item__act .x-btn--danger { flex: 0 0 auto; margin-left: auto; }
+        /* tablas como tarjetas */
+        .x-scroll { overflow: visible; border: 0; background: none; box-shadow: none; border-radius: 0; }
+        .x-tbl, .x-tbl tbody { display: block; }
+        .x-tbl thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+        .x-tbl tr { display: grid; gap: 8px; padding: 14px; margin-bottom: 8px; background: var(--x-bg2); border: 1px solid var(--x-line); border-radius: 8px; box-shadow: var(--x-shadow); }
+        .x-tbl tbody tr:nth-child(even) { background: var(--x-bg2); }
+        .x-tbl td, .x-tbl td:first-child, .x-tbl td:last-child { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 10px; padding: 0; border: 0; min-width: 0; overflow-wrap: anywhere; }
+        .x-tbl td::before { content: attr(data-label); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--x-dim); padding-top: 1px; }
+        .x-tbl td:not([data-label]) { display: block; }
+        .x-tbl td:not([data-label])::before { content: none; }
+        .x-tbl td.x-tbl__key { font-weight: 600; font-size: 15px; }
+        .x-tbl td a { display: inline-flex; align-items: center; min-height: 32px; }
+        .x-row > * { flex-basis: 100%; }
+        .x-row > .x-btn, .x-row > input[type="color"] { flex-basis: auto; }
+        .x-panel { padding: 16px; }
+        .x-save { position: sticky; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 5; width: 100%; justify-self: stretch !important; box-shadow: 0 6px 18px rgba(40,30,15,.22); }
+        .x-gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+        .x-gal__it { width: auto; }
+        .x-gal__it img { height: 150px; }
+        .x-gal__ctl { gap: 4px; }
+        .x-gal__ctl button, .x-gal__it .x-btn { min-height: 44px !important; }
+        .x-blk__top .x-blk__sp { gap: 8px; }
+        .x-blk img.x-thumb { width: 100%; height: 140px; }
+        .x-dl { grid-template-columns: 96px minmax(0, 1fr); }
+        .x-sumrow span:first-child { min-width: 0; overflow-wrap: anywhere; }
+        .x-sumrow span:last-child { white-space: nowrap; }
+        .x-vid, .x-prog { max-width: 100%; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page x-app" id="top">
+      <header class="x-bar">
+        <div class="x-bar__in">
+          <span class="x-logo"><img src="https://jqssfwthrckqykwjwbsg.supabase.co/storage/v1/object/public/products/site/logo-wordmark.jpg" alt="Volkarra" /></span>
+          <span class="x-bar__tag">Admin</span>
+          <div class="x-bar__r" id="barR"></div>
+        </div>
+      </header>
+      <main id="view"></main>
+      <footer class="x-foot"><p>Panel privado de Volkarra</p></footer>
+      <div class="x-scrim" id="scrim" hidden=""></div>
+      <div class="x-modal" id="modal" hidden="" role="dialog" aria-modal="true" aria-label="Detalle">
+        <div class="x-modal__box" id="modalBox"></div>
+      </div>
+      <div class="x-toast" id="toast" role="status" hidden=""></div>
+    </div>
+    <script src="hark.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" integrity="sha384-0w2KAL2YHP6wKOkUDzkCDGgVvfmHnj02DHeQ6XcHOgTfFsGyonKOpShMH1x6nk9o" crossorigin="anonymous"></script>
+    <script>
+(function () {
+"use strict";
+
+const SB_URL = 'https://jqssfwthrckqykwjwbsg.supabase.co';
+const SB_KEY = 'sb_publishable_0aaO1Ad5Mo4McczpM4h_Tw_5a1qVESu';
+const BASE = SB_URL + '/storage/v1/object/public/products/site';
+const PUB = SB_URL + '/storage/v1/object/public/products/';
+const STATUSES = ['Pendiente de pago', 'Pagado', 'Enviado', 'Entregado', 'Cancelado'];
+const PAID = ['Pagado', 'Enviado', 'Entregado'];
+const COLOR_HEX = { negro: '#111', black: '#111', arena: '#C9B99A', sand: '#C9B99A', oliva: '#5E6B3A', olive: '#5E6B3A', hueso: '#EDE8DE', bone: '#EDE8DE', blanco: '#fff', gris: '#777', grafito: '#3a3a3a', cafe: '#6b4f3a', verde: '#4b5a2e', azul: '#2d3b55', beige: '#d8c9a8', crema: '#efe6d2' };
+const MAX_PHOTOS = 8;
+const IMG_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+const VIDEO_TYPES = { 'video/mp4': '.mp4', 'video/webm': '.webm' };
+const MB = 1024 * 1024;
+const MAX_IMG_BYTES = 5 * MB;
+const MAX_VIDEO_BYTES = 40 * MB;
+const IDLE_MS = 30 * 60 * 1000;
+
+// sesión solo en memoria
+const memStore = (function () { const m = {}; return { getItem: (k) => (k in m ? m[k] : null), setItem: (k, v) => { m[k] = String(v); }, removeItem: (k) => { delete m[k]; } }; })();
+const sb = window.supabase.createClient(SB_URL, SB_KEY, {
+  auth: { persistSession: false, autoRefreshToken: true, detectSessionInUrl: false, storage: memStore, storageKey: 'vk-admin-mem', flowType: 'implicit',
+    // iframe sandbox: navigator.locks revienta, lock vacío
+    lock: async (name, acquireTimeout, fn) => await fn() },
+});
+
+const $ = (s, r) => (r || document).querySelector(s);
+const S = { tab: 'pedidos', step: 'login', email: '', lockUntil: 0, factor: null, enroll: null };
+// mismo corte que el css
+const PHONE = window.matchMedia('(max-width: 699px)');
+
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  if (attrs) for (const k in attrs) {
+    const v = attrs[k];
+    if (v == null || v === false) continue;
+    if (k === 'class') el.className = v;
+    else if (k === 'text') el.textContent = v;
+    else if (k === 'value') el.value = v;
+    else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+    else if (k === 'style') el.setAttribute('style', v);
+    else if (k in el && typeof v !== 'string') el[k] = v;
+    else el.setAttribute(k, v === true ? '' : v);
+  }
+  for (const c of kids.flat(9)) if (c != null && c !== false) el.append(c.nodeType ? c : String(c));
+  return el;
+}
+function field(label, input, hint) { return h('label', { class: 'x-field' }, h('span', { text: label }), input, hint ? h('small', { class: 'x-muted', text: hint }) : null); }
+const inp = (name, val, attrs) => h('input', Object.assign({ class: 'x-in', name, value: val == null ? '' : String(val) }, attrs || {}));
+const numIn = (val, attrs) => h('input', Object.assign({ class: 'x-in', type: 'number', inputmode: 'numeric', step: 1, value: val == null ? '' : String(val) }, attrs || {}));
+const tIn = (obj, key, attrs) => { const i = h('input', Object.assign({ class: 'x-in', value: obj[key] || '' }, attrs || {})); i.addEventListener('input', () => { obj[key] = i.value; }); return i; };
+const iconBtn = (label, text, disabled, onclick, danger) => h('button', { type: 'button', class: 'x-icon', style: danger ? 'color:var(--x-red);border-color:var(--x-red)' : null, 'aria-label': label, text, disabled, onclick });
+const setNote = (el, text, kind) => { el.className = 'x-msg x-small' + (kind ? ' x-msg--' + kind : ''); el.textContent = text; };
+const kpi = (val, label) => h('div', { class: 'x-kpi' }, h('b', { text: String(val) }), h('span', { text: label }));
+function section(title, sub, ...kids) {
+  return h('section', { class: 'x-panel', style: 'display:grid;gap:14px;margin-bottom:20px' }, h('h2', { style: 'margin:0', text: title }), sub ? h('p', { class: 'x-muted x-small', style: 'margin:-6px 0 0', text: sub }) : null, kids);
+}
+function swatch(c) { const hx = COLOR_HEX[norm(c).split(' ')[0]]; return hx ? h('i', { class: 'x-sw', style: 'background:' + hx }) : null; }
+function toast(msg, kind) {
+  const t = $('#toast'); t.textContent = msg; t.hidden = false;
+  t.className = 'x-toast' + (kind ? ' x-toast--' + kind : '');
+  t.setAttribute('role', kind === 'err' ? 'alert' : 'status');
+  clearTimeout(toast.t); toast.t = setTimeout(() => (t.hidden = true), kind === 'err' ? 6000 : 2800);
+}
+
+const clp = (n) => '$' + String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+const norm = (s) => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+const fdate = (d) => { try { return new Date(d).toLocaleString('es-CL', { dateStyle: 'short', timeStyle: 'short' }); } catch (e) { return d || ''; } };
+const arr = (v) => (Array.isArray(v) ? v.filter(Boolean) : v ? String(v).split(',').map((s) => s.trim()).filter(Boolean) : []);
+const slugify = (s) => norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const isHex = (v) => /^#[0-9a-f]{6}$/i.test(v);
+function isObj(v) { return !!v && typeof v === 'object' && !Array.isArray(v); }
+function optInt(raw, label, min, max) {
+  const t = String(raw == null ? '' : raw).trim();
+  if (t === '') return null;
+  const n = Number(t);
+  if (!Number.isInteger(n) || n < min || (max != null && n > max)) throw new Error(label + ': escribe un número entero ' + (max != null ? 'entre ' + min + ' y ' + max : 'desde ' + min) + '.');
+  return n;
+}
+const custName = (c) => (c ? [c.first_name, c.last_name].filter(Boolean).join(' ') : '');
+const fullAddr = (c) => (c ? [c.address, c.address2, c.comuna, c.region].filter(Boolean).join(', ') : '');
+
+// solo https
+function safeUrl(u) {
+  if (typeof u !== 'string' || !u.trim()) return '';
+  try { return new URL(u.trim()).protocol === 'https:' ? u.trim() : ''; } catch (e) { return ''; }
+}
+function randomId() {
+  if (crypto.randomUUID) return crypto.randomUUID();
+  return Array.from(crypto.getRandomValues(new Uint8Array(16)), (b) => b.toString(16).padStart(2, '0')).join('');
+}
+function downloadCSV(name, cols, rows) {
+  const esc = (v) => {
+    v = v == null ? '' : typeof v === 'object' ? JSON.stringify(v) : String(v);
+    if (/^[=+\-@\t\r]/.test(v)) v = "'" + v; // evita fórmulas en excel
+    return /[",;\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+  };
+  const txt = '\ufeff' + [cols.map((c) => esc(c[0])).join(';')].concat(rows.map((r) => cols.map((c) => esc(c[1](r))).join(';'))).join('\r\n');
+  const url = URL.createObjectURL(new Blob([txt], { type: 'text/csv;charset=utf-8' }));
+  const a = h('a', { href: url, download: name + '-' + new Date().toISOString().slice(0, 10) + '.csv' });
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+function fallbackImg(name) {
+  const n = norm(name);
+  if (/poleron|hoodie|buzo|chaqueta/.test(n)) return BASE + '/poleron.jpg';
+  if (/polera|tee|camiseta|shirt/.test(n)) return BASE + '/polera.jpg';
+  if (/jockey|gorra|cap/.test(n)) return BASE + '/jockey.jpg';
+  if (/beanie|gorro/.test(n)) return BASE + '/beanie.jpg';
+  return BASE + '/poleron.jpg';
+}
+function pimg(p, cls) {
+  const fb = fallbackImg(p && p.name);
+  const img = h('img', { src: safeUrl(p && p.image_url) || fb, alt: (p && p.name) || 'Producto Volkarra', loading: 'lazy', class: cls });
+  img.addEventListener('error', function onErr() { img.removeEventListener('error', onErr); if (img.src !== fb) img.src = fb; });
+  return img;
+}
+
+const OPAQUE_MSG = 'Error del navegador. Recarga la página e intenta de nuevo.';
+const isOpaqueErr = (m) => /opaque|SecurityError/i.test(String(m || ''));
+function errText(e) {
+  const m = String((e && (e.message || e.error_description || e.msg)) || '').trim();
+  if (!m) return 'Algo salió mal. Intenta de nuevo.';
+  if (isOpaqueErr(m) || (e && e.name === 'SecurityError')) return OPAQUE_MSG;
+  if (/failed to fetch|networkerror/i.test(m)) return 'Sin conexión. Revisa tu internet e intenta de nuevo.';
+  if (/jwt|permission|rls|not authorized|row-level/i.test(m)) return 'No tienes permiso para esta acción. Vuelve a iniciar sesión.';
+  if (/duplicate/i.test(m)) return 'Ese registro ya existe.';
+  if (/foreign|violates/i.test(m)) return 'No se puede eliminar: el registro está en uso.';
+  return m;
+}
+function sbErr(e) {
+  const raw = String((e && (e.message || e.details || e.hint)) || '').trim();
+  const t = errText(e);
+  return raw && t !== raw ? t + ' (' + raw + ')' : t;
+}
+async function q(builder) {
+  let r;
+  try { r = await builder; } catch (e) { throw new Error(errText(e)); }
+  if (r.error) throw new Error(errText(r.error));
+  return r.data;
+}
+async function rpc(name, args) {
+  const r = await sb.rpc(name, args || {});
+  if (r.error) throw new Error(errText(r.error));
+  return r.data;
+}
+
+const vstock = (p) => (p && p.variant_stock && typeof p.variant_stock === 'object' && !Array.isArray(p.variant_stock) ? p.variant_stock : {});
+const vkey = (size, color) => (size || '') + '|' + (color || '');
+const useVS = (p) => Object.keys(vstock(p)).length > 0 && arr(p.sizes).length > 0 && arr(p.colors).length > 0;
+const vnum = (p, size, color) => Math.max(0, Number(vstock(p)[vkey(size, color)]) || 0);
+function totalStock(p) {
+  if (!useVS(p)) return Math.max(0, Number(p.stock) || 0);
+  let t = 0; arr(p.sizes).forEach((s) => arr(p.colors).forEach((c) => (t += vnum(p, s, c)))); return t;
+}
+function lowCombos(p, lim) {
+  if (!useVS(p)) return (Number(p.stock) || 0) <= lim ? [{ label: '', n: Math.max(0, Number(p.stock) || 0) }] : [];
+  const out = [];
+  arr(p.sizes).forEach((s) => arr(p.colors).forEach((c) => { const n = vnum(p, s, c); if (n <= lim) out.push({ label: s + ' ' + c, n }); }));
+  return out;
+}
+
+let lastFocus = null, hideT = null;
+function openModal(content, label, sheet) {
+  clearTimeout(hideT);
+  lastFocus = document.activeElement;
+  const m = $('#modal'), box = $('#modalBox');
+  box.textContent = ''; box.scrollTop = 0;
+  box.className = 'x-modal__box' + (sheet ? ' x-modal__box--sheet' : '');
+  box.append(h('button', { class: 'x-icon x-modal__close', type: 'button', 'aria-label': 'Cerrar', text: '✕', onclick: closeAll }), content);
+  m.setAttribute('aria-label', label || 'Detalle');
+  m.hidden = false; $('#scrim').hidden = false;
+  requestAnimationFrame(() => { m.classList.add('is-on'); $('#scrim').classList.add('is-on'); const f = box.querySelector('input,select,textarea,.x-btn:not(:disabled)'); (f || box.querySelector('button')).focus(); });
+  document.body.style.overflow = 'hidden';
+}
+function closeAll() {
+  const m = $('#modal'), sc = $('#scrim');
+  if (confirmDlg.pending) { const p = confirmDlg.pending; confirmDlg.pending = null; p(false); }
+  if (sc.hidden) return;
+  m.classList.remove('is-on'); sc.classList.remove('is-on');
+  hideT = setTimeout(() => { m.hidden = true; sc.hidden = true; $('#modalBox').textContent = ''; }, 250);
+  document.body.style.overflow = '';
+  if (lastFocus && lastFocus.focus && document.contains(lastFocus)) lastFocus.focus();
+}
+$('#scrim').addEventListener('click', closeAll);
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+// confirm() nativo puede venir bloqueado en el iframe
+function confirmDlg(opts) {
+  return new Promise((resolve) => {
+    const done = (v) => { if (confirmDlg.pending !== resolve) return; confirmDlg.pending = null; resolve(v); closeAll(); };
+    const ok = h('button', { class: 'x-btn x-btn--sm ' + (opts.danger ? 'x-btn--danger' : ''), type: 'button', text: opts.ok || 'Confirmar', onclick: () => done(true) });
+    const cancel = h('button', { class: 'x-btn x-btn--ghost x-btn--sm', type: 'button', text: 'Cancelar', onclick: () => done(false) });
+    if (confirmDlg.pending) { const p = confirmDlg.pending; confirmDlg.pending = null; p(false); }
+    openModal(h('div', { class: 'x-dlg' }, h('h2', { text: opts.title || 'Confirmar' }), h('p', { text: opts.msg }), opts.warn ? h('p', { class: 'x-warn', role: 'alert', text: opts.warn }) : null, h('div', { class: 'x-dlg__btns' }, cancel, ok)), opts.title || 'Confirmar');
+    confirmDlg.pending = resolve;
+    requestAnimationFrame(() => cancel.focus());
+  });
+}
+
+const mbText = (bytes) => (bytes / MB).toFixed(1).replace('.', ',') + ' MB';
+function checkImage(file) {
+  if (!IMG_TYPES.includes(file.type)) throw new Error('Formato no permitido: usa JPG, PNG o WebP.');
+}
+function checkImageSize(blob) {
+  if (!blob) throw new Error('No se pudo comprimir la imagen.');
+  if (blob.size > MAX_IMG_BYTES) throw new Error('La imagen comprimida pesa ' + mbText(blob.size) + '. El máximo es 5 MB.');
+}
+async function resizeImg(file, max) {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => rej(new Error('No se pudo leer la imagen.')); i.src = url; });
+    const k = Math.min(1, (max || 1600) / Math.max(img.naturalWidth, img.naturalHeight));
+    const c = document.createElement('canvas');
+    c.width = Math.max(1, Math.round(img.naturalWidth * k)); c.height = Math.max(1, Math.round(img.naturalHeight * k));
+    const ctx = c.getContext('2d'); ctx.drawImage(img, 0, 0, c.width, c.height);
+    // webp primero, si no hay soporte jpeg
+    const wb = await new Promise((res) => c.toBlob(res, 'image/webp', 0.82));
+    if (wb && wb.type === 'image/webp') return wb;
+    ctx.globalCompositeOperation = 'destination-over'; ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+    return await new Promise((res) => c.toBlob(res, 'image/jpeg', 0.82));
+  } finally { URL.revokeObjectURL(url); }
+}
+const IMG_EXT = { 'image/webp': '.webp', 'image/jpeg': '.jpg', 'image/png': '.png', 'image/gif': '.gif', 'image/svg+xml': '.svg' };
+async function uploadImg(file, folder, prefix) {
+  // gif/svg van tal cual
+  const raw = file.type === 'image/gif' || file.type === 'image/svg+xml';
+  if (!raw) checkImage(file);
+  // comprimir antes de subir
+  let blob = raw ? file : await resizeImg(file, 1600);
+  // si sale más pesado, subir el original
+  if (blob && blob.size > file.size) blob = file;
+  checkImageSize(blob);
+  const type = blob.type || file.type || 'image/jpeg';
+  const path = (folder ? folder.replace(/\/$/, '') + '/' : '') + (prefix || '') + randomId() + (IMG_EXT[type] || '.jpg');
+  const r = await sb.storage.from('products').upload(path, blob, { cacheControl: '2592000', contentType: type, upsert: true });
+  if (r.error) throw new Error('No se pudo subir la imagen: ' + errText(r.error));
+  return PUB + path;
+}
+// con onProg va por xhr para tener progreso
+async function putFile(path, blob, type, onProg) {
+  if (onProg && window.XMLHttpRequest) {
+    let tok = null;
+    try { const s = await sb.auth.getSession(); tok = s.data && s.data.session && s.data.session.access_token; } catch (e) { tok = null; }
+    if (tok) {
+      try {
+        await new Promise((res, rej) => {
+          const x = new XMLHttpRequest();
+          x.open('POST', SB_URL + '/storage/v1/object/products/' + path.split('/').map(encodeURIComponent).join('/'));
+          x.setRequestHeader('Authorization', 'Bearer ' + tok);
+          x.setRequestHeader('apikey', SB_KEY);
+          x.setRequestHeader('x-upsert', 'true');
+          x.setRequestHeader('Content-Type', type);
+          x.setRequestHeader('cache-control', 'max-age=2592000');
+          x.upload.onprogress = (e) => { if (e.lengthComputable) onProg(e.loaded / e.total); };
+          x.onload = () => {
+            if (x.status >= 200 && x.status < 300) return res();
+            let m = ''; try { const j = JSON.parse(x.responseText); m = j.message || j.error || ''; } catch (e) { m = x.responseText; }
+            const err = new Error(x.status === 413 || /size|large/i.test(m) ? 'El archivo supera el tamaño permitido por el almacenamiento.' : errText({ message: m || 'Error ' + x.status }));
+            err.http = true; rej(err);
+          };
+          x.onerror = () => rej(new Error('net'));
+          x.send(blob);
+        });
+        onProg(1);
+        return PUB + path;
+      } catch (e) { if (e.http) throw new Error('No se pudo subir: ' + e.message); }
+    }
+  }
+  const r = await sb.storage.from('products').upload(path, blob, { cacheControl: '2592000', contentType: type, upsert: true });
+  if (r.error) throw new Error('No se pudo subir: ' + errText(r.error));
+  if (onProg) onProg(1);
+  return PUB + path;
+}
+
+const view = () => $('#view');
+const lockText = (sec) => 'Demasiados intentos. Espera ' + Math.ceil(sec / 60) + ' min.';
+function drawBar() {
+  const r = $('#barR'); r.textContent = '';
+  if (S.step !== 'panel') return;
+  r.append(h('span', { class: 'x-bar__who', text: S.email }), h('button', { class: 'x-btn x-btn--ghost x-btn--sm', type: 'button', text: 'Cerrar sesión', onclick: logout }));
+}
+function render() {
+  clearInterval(S.lockTimer);
+  drawBar();
+  if (S.step === 'panel') return renderPanel();
+  if (S.step === 'mfa') return renderMfa();
+  if (S.step === 'enroll') return renderEnroll();
+  renderLogin();
+}
+async function logout(notice) {
+  closeAll();
+  try { await sb.auth.signOut(); } catch (e) {}
+  S.step = 'login'; S.factor = null; S.enroll = null; S.notice = typeof notice === 'string' ? notice : null;
+  render();
+}
+function shell(title, ...kids) {
+  const v = view(); v.textContent = '';
+  v.append(h('div', { class: 'x-login' },
+    h('div', { class: 'x-logo' }, h('img', { src: BASE + '/logo-wordmark.jpg', alt: 'Volkarra' })),
+    h('h1', { text: title }), kids));
+}
+function emailFrom(raw) {
+  const t = raw.trim().toLowerCase();
+  if (!t) return '';
+  return t.includes('@') ? t : t + '@volkarra.cl';
+}
+function renderLogin() {
+  const msg = h('p', { class: 'x-msg x-msg--err', role: 'alert' });
+  const btn = h('button', { class: 'x-btn x-btn--block', type: 'submit', text: 'Ingresar' });
+  const user = h('input', { class: 'x-in', type: 'text', name: 'email', required: true, autocomplete: 'username', autocapitalize: 'off', autocorrect: 'off', spellcheck: 'false', value: S.rawUser || '' });
+  const pass = h('input', { class: 'x-in', type: 'password', name: 'password', required: true, autocomplete: 'current-password' });
+  const form = h('form', { class: 'x-form', novalidate: true }, field('Usuario o email', user), field('Contraseña', pass), msg, btn);
+  let busy = false;
+  const startLock = (sec) => { S.lockUntil = Date.now() + sec * 1000; tick(); };
+  function tick() {
+    clearInterval(S.lockTimer);
+    const left = () => Math.ceil((S.lockUntil - Date.now()) / 1000);
+    const upd = () => {
+      const s = left();
+      if (s > 0) { msg.textContent = lockText(s); btn.disabled = true; }
+      else { clearInterval(S.lockTimer); S.lockUntil = 0; msg.textContent = ''; btn.disabled = busy; }
+    };
+    upd();
+    if (left() > 0) S.lockTimer = setInterval(upd, 1000);
+  }
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (busy || S.lockUntil > Date.now()) return;
+    msg.textContent = '';
+    const em = emailFrom(user.value), pw = pass.value;
+    if (!em || !pw) { msg.textContent = 'Escribe tu usuario y contraseña.'; return; }
+    S.rawUser = user.value.trim(); S.email = em;
+    busy = true; btn.disabled = true; btn.textContent = 'Ingresando…';
+    const done = () => { busy = false; btn.textContent = 'Ingresar'; btn.disabled = S.lockUntil > Date.now(); };
+    try {
+      let lock = 0;
+      try { lock = Number(await rpc('admin_lock_remaining', { p_email: em })) || 0; } catch (e2) { lock = 0; }
+      if (lock > 0) { done(); startLock(lock); return; }
+      const { error } = await sb.auth.signInWithPassword({ email: em, password: pw });
+      if (error) {
+        if (/fetch|network/i.test(error.message || '') || isOpaqueErr(error.message) || error.name === 'SecurityError') { msg.textContent = errText(error); done(); return; }
+        let sec = 0;
+        try { sec = Number(await rpc('admin_login_failed', { p_email: em })) || 0; } catch (e3) { sec = 0; }
+        pass.value = '';
+        done();
+        if (sec > 0) startLock(sec);
+        else msg.textContent = 'Usuario o contraseña incorrectos.';
+        return;
+      }
+      let ok = false;
+      try { ok = (await rpc('is_admin_aal1')) === true; } catch (e4) { ok = false; }
+      if (!ok) { await sb.auth.signOut(); done(); pass.value = ''; msg.textContent = 'Esta cuenta no tiene acceso de administrador'; return; }
+      await startMfa();
+    } catch (err) { msg.textContent = errText(err); done(); }
+  });
+  shell('Panel de administración', h('div', { class: 'x-panel' }, form),
+    h('p', { class: 'x-muted x-small', style: 'text-align:center;margin:0', text: 'Acceso con verificación en dos pasos.' }));
+  if (S.notice) { msg.textContent = S.notice; S.notice = null; }
+  if (S.lockUntil > Date.now()) tick();
+  (S.rawUser ? pass : user).focus();
+}
+
+// mfa totp
+async function startMfa() {
+  const { data, error } = await sb.auth.mfa.listFactors();
+  if (error) throw new Error(errText(error));
+  const all = (data && (data.all || [])) || [];
+  const totp = all.filter((f) => f.factor_type === 'totp');
+  const verified = totp.find((f) => f.status === 'verified');
+  if (verified) { S.factor = verified.id; S.step = 'mfa'; render(); return; }
+  for (const f of totp) { try { await sb.auth.mfa.unenroll({ factorId: f.id }); } catch (e) {} }
+  const en = await sb.auth.mfa.enroll({ factorType: 'totp', friendlyName: 'Volkarra Admin' });
+  if (en.error) throw new Error(errText(en.error));
+  S.enroll = en.data; S.factor = en.data.id; S.step = 'enroll'; render();
+}
+function codeForm(onOk) {
+  const msg = h('p', { class: 'x-msg x-msg--err', role: 'alert' });
+  const btn = h('button', { class: 'x-btn x-btn--block', type: 'submit', text: 'Verificar' });
+  const code = h('input', { class: 'x-in x-code', type: 'text', name: 'code', inputmode: 'numeric', autocomplete: 'one-time-code', maxlength: 6, pattern: '[0-9]{6}', required: true, 'aria-label': 'Código de 6 dígitos', placeholder: '000000' });
+  const form = h('form', { class: 'x-form', novalidate: true }, field('Código de 6 dígitos', code), msg, btn);
+  let busy = false;
+  code.addEventListener('input', () => {
+    code.value = code.value.replace(/\D/g, '').slice(0, 6);
+    if (code.value.length === 6 && !busy && form.requestSubmit) form.requestSubmit();
+  });
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (busy) return;
+    msg.textContent = '';
+    if (!/^\d{6}$/.test(code.value)) { msg.textContent = 'Escribe los 6 dígitos de tu app.'; return; }
+    busy = true; btn.disabled = true; btn.textContent = 'Verificando…';
+    try {
+      const { error } = await sb.auth.mfa.challengeAndVerify({ factorId: S.factor, code: code.value });
+      if (error) throw error;
+      const aal = await sb.auth.mfa.getAuthenticatorAssuranceLevel();
+      if (!aal.data || aal.data.currentLevel !== 'aal2') throw new Error('No se completó la verificación. Intenta de nuevo.');
+      onOk();
+    } catch (err) {
+      busy = false; btn.disabled = false; btn.textContent = 'Verificar';
+      msg.textContent = isOpaqueErr(err && err.message) || (err && err.name === 'SecurityError') ? OPAQUE_MSG : /invalid|code|expired|totp/i.test(String(err.message)) ? 'Código incorrecto o vencido. Revisa tu app e intenta de nuevo.' : errText(err);
+      code.value = ''; code.focus();
+    }
+  });
+  return { form, code };
+}
+const toPanel = () => { S.step = 'panel'; S.enroll = null; S.tab = S.tab || 'pedidos'; render(); };
+function renderMfa() {
+  const c = codeForm(toPanel);
+  shell('Verificación en dos pasos',
+    h('p', { class: 'x-muted', style: 'text-align:center;margin:0', text: 'Abre tu app de autenticación y escribe el código de Volkarra Admin.' }),
+    h('div', { class: 'x-panel' }, c.form),
+    h('button', { class: 'x-btn x-btn--ghost x-btn--sm', type: 'button', text: 'Cerrar sesión', onclick: logout }));
+  c.code.focus();
+}
+function renderEnroll() {
+  const t = (S.enroll && S.enroll.totp) || {};
+  const c = codeForm(() => { toast('Verificación en dos pasos activada'); toPanel(); });
+  const copyBtn = h('button', { class: 'x-btn x-btn--ghost x-btn--sm', type: 'button', text: 'Copiar clave', onclick: async () => {
+    try { await navigator.clipboard.writeText(t.secret || ''); toast('Clave copiada'); } catch (e) { toast('Selecciona la clave y cópiala a mano'); }
+  } });
+  shell('Activa la verificación en dos pasos',
+    h('div', { class: 'x-panel', style: 'display:grid;gap:14px' },
+      h('p', { class: 'x-msg', text: 'Escanea con Google Authenticator, Microsoft Authenticator o Authy y escribe el código de 6 dígitos.' }),
+      t.qr_code ? h('div', { class: 'x-qr' }, h('img', { src: t.qr_code, alt: 'Código QR para tu app de autenticación' })) : null,
+      h('div', { class: 'x-field' }, h('span', { text: '¿No puedes escanear? Escribe esta clave' }), h('div', { class: 'x-pre', text: t.secret || '' }), copyBtn),
+      c.form),
+    h('button', { class: 'x-btn x-btn--ghost x-btn--sm', type: 'button', text: 'Cerrar sesión', onclick: logout }));
+}
+
+const TABS = [['pedidos', 'Pedidos'], ['productos', 'Productos'], ['resenas', 'Reseñas'], ['clientes', 'Clientes'], ['newsletter', 'Newsletter'], ['marketing', 'Marketing'], ['personalizar', 'Personalizar'], ['ajustes', 'Ajustes']];
+function updTabBadge() {
+  const el = $('#tabRevN'); if (!el) return;
+  const n = Number(S.pendingReviews) || 0;
+  el.textContent = String(n); el.hidden = !n;
+  el.setAttribute('aria-label', n + (n === 1 ? ' pendiente' : ' pendientes'));
+}
+const goTab = (k) => { S.tab = k; renderPanel(); window.scrollTo(0, 0); };
+function renderPanel() {
+  const v = view(); v.textContent = '';
+  const main = h('div', { class: 'x-main' });
+  const side = h('nav', { class: 'x-side', 'aria-label': 'Secciones del panel' }, TABS.map(([k, l]) => h('button', { type: 'button', 'aria-current': S.tab === k ? 'page' : null, onclick: () => goTab(k) }, l, k === 'resenas' ? h('span', { class: 'x-tabn', id: 'tabRevN', hidden: true }) : null)));
+  sb.from('reviews').select('id', { count: 'exact', head: true }).not('approved', 'is', true)
+    .then((r) => { if (!r.error) { S.pendingReviews = r.count || 0; updTabBadge(); } }, () => {});
+  v.append(h('div', { class: 'x-adm' }, side, main));
+  const cur = side.querySelector('[aria-current="page"]');
+  if (cur && side.scrollWidth > side.clientWidth) side.scrollLeft = Math.max(0, cur.offsetLeft - (side.clientWidth - cur.offsetWidth) / 2);
+  main.append(h('div', { class: 'x-adhead' }, h('h1', { text: TABS.find((t) => t[0] === S.tab)[1] }),
+    h('button', { class: 'x-btn x-btn--ghost x-btn--sm', type: 'button', text: 'Cerrar sesión', onclick: logout })));
+  const body = h('div', null, h('p', { class: 'x-muted', text: 'Cargando…' }));
+  main.append(body);
+  updTabBadge();
+  const fn = { pedidos: tabPedidos, productos: tabProductos, resenas: tabResenas, clientes: tabClientes, newsletter: tabNews, marketing: tabMarketing, personalizar: tabPersonalizar, ajustes: tabAjustes }[S.tab];
+  fn(body).catch((e) => {
+    body.textContent = '';
+    body.append(h('div', { class: 'x-err' }, h('p', { text: errText(e) }), h('button', { class: 'x-btn x-btn--ghost', type: 'button', text: 'Reintentar', onclick: renderPanel })));
+  });
+}
+
+async function loadSettings() {
+  const d = await q(sb.from('settings').select('*').eq('id', 1).limit(1));
+  return (d && d[0]) || {};
+}
+async function saveSettings(patch) {
+  const d = await q(sb.from('settings').update(patch).eq('id', 1).select('id'));
+  if (!d || !d.length) throw new Error('No se guardó: no tienes permiso o la fila de ajustes no existe.');
+}
+// merge a un nivel
+async function saveExtras(patch) {
+  const s = await loadSettings();
+  const cur = isObj(s.extras) ? s.extras : {};
+  const next = Object.assign({}, cur);
+  Object.keys(patch).forEach((k) => { next[k] = isObj(patch[k]) && isObj(cur[k]) ? Object.assign({}, cur[k], patch[k]) : patch[k]; });
+  await saveSettings({ extras: next });
+  return next;
+}
+
+function actForm(kids, run) {
+  const txt = 'Guardar cambios';
+  const btn = h('button', { class: 'x-btn x-save', type: 'submit', style: 'justify-self:start', text: txt });
+  const form = h('form', { class: 'x-form', novalidate: true }, kids, btn);
+  let busy = false;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (busy) return;
+    if (form.dataset.uploading) { toast('Espera a que termine la subida'); return; }
+    busy = true; btn.disabled = true; btn.textContent = 'Guardando…';
+    try { const m = await run(); if (m) toast(m); } catch (err) { toast(err.message); }
+    busy = false; btn.disabled = false; btn.textContent = txt;
+  });
+  return form;
+}
+function saveForm(kids, collect, okMsg) {
+  return actForm(kids, async () => {
+    const patch = collect();
+    try { await saveSettings(patch); } catch (err) { throw new Error('Error: ' + err.message); }
+    return okMsg;
+  });
+}
+
+const discLabel = (o) => (Number(o.discount) > 0 ? '-' + clp(o.discount) + (o.coupon ? ' · ' + o.coupon : '') : '');
+const isArch = (o) => o.archived === true;
+// sin filas = rls o pedido ya no existe
+async function ordWrite(builder, allowEmpty) {
+  let r;
+  try { r = await builder; } catch (e) { throw new Error(sbErr(e)); }
+  if (r.error) throw new Error(sbErr(r.error));
+  if (!allowEmpty && (!r.data || !r.data.length)) throw new Error('No se modificó ningún pedido: sin permiso o ya no existe.');
+  return r.data || [];
+}
+async function tabPedidos(body) {
+  if (S.ordView !== 'arc') S.ordView = 'act';
+  let rowsAll = [], subsN = 0;
+  const openIds = new Set();
+  const kpis = h('div', { class: 'x-kpis' });
+  const list = h('div', { class: 'x-list' });
+  const qi = h('input', { class: 'x-in', type: 'search', placeholder: 'Buscar por número, nombre o RUT', 'aria-label': 'Buscar pedidos', autocomplete: 'off', enterkeyhint: 'search', spellcheck: 'false' });
+  const fsel = h('select', { class: 'x-in', 'aria-label': 'Filtrar por estado', style: 'flex:0 1 220px' }, h('option', { value: '', text: 'Todos los estados' }), STATUSES.map((s) => h('option', { value: s, text: s })));
+  const nAct = h('span'), nArc = h('span');
+  const segAct = h('button', { type: 'button', 'aria-pressed': 'true', onclick: () => setView('act') }, 'Activos', nAct);
+  const segArc = h('button', { type: 'button', 'aria-pressed': 'false', onclick: () => setView('arc') }, 'Archivados', nArc);
+  const seg = h('div', { class: 'x-seg', role: 'group', 'aria-label': 'Mostrar pedidos' }, segAct, segArc);
+  const bulkBtn = h('button', { class: 'x-btn x-btn--olive x-btn--sm', type: 'button', text: 'Archivar entregados', onclick: bulkArchive });
+  function setView(v) { S.ordView = v; openIds.clear(); draw(); }
+  async function load() {
+    const [orders, subs] = await Promise.all([
+      q(sb.from('orders').select('*,customers(*)').order('created_at', { ascending: false })),
+      q(sb.from('newsletter').select('email')).catch(() => null),
+    ]);
+    rowsAll = orders || [];
+    if (subs) subsN = subs.length;
+    drawKpis(); draw();
+  }
+  async function refresh() { try { await load(); } catch (e) { toast('No se pudo actualizar la lista: ' + e.message, 'err'); } }
+  // archivados igual suman en ventas
+  function drawKpis() {
+    const sales = rowsAll.filter((o) => PAID.includes(o.status)).reduce((a, o) => a + (Number(o.total) || 0), 0);
+    const act = rowsAll.filter((o) => !isArch(o));
+    const pend = act.filter((o) => !o.status || o.status === 'Pendiente de pago').length;
+    const arcN = rowsAll.length - act.length;
+    const delivered = act.filter((o) => o.status === 'Entregado').length;
+    kpis.textContent = '';
+    kpis.append(kpi(clp(sales), 'Ventas totales'), kpi(rowsAll.length, 'Pedidos'), kpi(arcN, 'Archivados'), kpi(pend, 'Pendientes de pago'), kpi(subsN, 'Suscriptores'));
+    nAct.textContent = '(' + act.length + ')'; nArc.textContent = '(' + arcN + ')';
+    bulkBtn.textContent = 'Archivar entregados' + (delivered ? ' (' + delivered + ')' : '');
+    bulkBtn.disabled = !delivered;
+  }
+  async function bulkArchive() {
+    const n = rowsAll.filter((o) => !isArch(o) && o.status === 'Entregado').length;
+    if (!n) { toast('No hay pedidos entregados por archivar.'); return; }
+    const ok = await confirmDlg({ title: 'Archivar entregados', msg: '¿Archivar ' + n + (n === 1 ? ' pedido entregado' : ' pedidos entregados') + '? Saldrán de la lista de activos, seguirán contando en las ventas y podrás restaurarlos desde Archivados.', ok: 'Archivar ' + n });
+    if (!ok) return;
+    bulkBtn.disabled = true;
+    try {
+      const d = await ordWrite(sb.from('orders').update({ archived: true }).eq('archived', false).eq('status', 'Entregado').select('id'), true);
+      toast(d.length ? d.length + (d.length === 1 ? ' pedido archivado' : ' pedidos archivados') : 'No se archivó ningún pedido.', d.length ? 'ok' : 'err');
+    } catch (e) { toast('Error al archivar: ' + e.message, 'err'); }
+    await refresh();
+  }
+  async function setArchived(o, val, btns) {
+    btns.forEach((b) => (b.disabled = true));
+    try {
+      await ordWrite(sb.from('orders').update({ archived: val }).eq('id', o.id).select('id'));
+      openIds.delete(o.id);
+      toast('Pedido #' + (o.number || '') + (val ? ' archivado' : ' restaurado'), 'ok');
+    } catch (e) { toast('Error: ' + e.message, 'err'); }
+    await refresh();
+  }
+  async function delOrder(o, btns) {
+    const st = o.status || 'Pendiente de pago';
+    const ok = await confirmDlg({ title: 'Eliminar pedido', danger: true, ok: 'Eliminar',
+      msg: '¿Eliminar el pedido #' + (o.number || '') + '? Esta acción no se puede deshacer.',
+      warn: ['Entregado', 'Cancelado'].includes(st) ? null : 'Atención: este pedido está «' + st + '», aún no está entregado ni cancelado. Si lo eliminas se pierde para siempre el registro del cliente, el pago y el envío, y deja de contar en las ventas.' });
+    if (!ok) return;
+    btns.forEach((b) => (b.disabled = true));
+    try {
+      await ordWrite(sb.from('orders').delete().eq('id', o.id).select('id'));
+      openIds.delete(o.id);
+      toast('Pedido #' + (o.number || '') + ' eliminado', 'ok');
+    } catch (e) { toast('Error al eliminar: ' + e.message, 'err'); }
+    await refresh();
+  }
+  const draw = () => {
+    const arcView = S.ordView === 'arc';
+    segAct.setAttribute('aria-pressed', String(!arcView)); segArc.setAttribute('aria-pressed', String(arcView));
+    const t = norm(qi.value).replace(/\./g, '');
+    const inView = rowsAll.filter((o) => isArch(o) === arcView);
+    const rows = inView.filter((o) => (!fsel.value || (o.status || 'Pendiente de pago') === fsel.value) && (!t || norm([o.number, custName(o.customers), o.customers && o.customers.rut].join(' ')).replace(/\./g, '').includes(t)));
+    list.textContent = '';
+    if (!rows.length) list.append(h('p', { class: 'x-muted', text: inView.length ? 'Sin resultados.' : arcView ? 'No hay pedidos archivados.' : rowsAll.length ? 'No hay pedidos activos.' : 'Aún no hay pedidos.' }));
+    const phone = PHONE.matches;
+    rows.forEach((o) => {
+      const c = o.customers || {};
+      const items = arr(o.items);
+      const btns = [], pills = [];
+      const stCls = (s) => 'x-st x-st--' + String(s || 'Pendiente').split(' ')[0];
+      const mkSt = () => { const p = h('span', { class: stCls(o.status), text: o.status || 'Pendiente de pago' }); pills.push(p); return p; };
+      const sels = [];
+      const mkSel = () => {
+        const sel = h('select', { class: 'x-in', 'aria-label': 'Estado del pedido #' + (o.number || '') }, STATUSES.concat(STATUSES.includes(o.status) || !o.status ? [] : [o.status]).map((s) => h('option', { value: s, text: s, selected: (o.status || 'Pendiente de pago') === s })));
+        sels.push(sel);
+        sel.addEventListener('change', async () => {
+          const prevS = o.status; sels.forEach((x) => (x.disabled = true));
+          try {
+            const d = await q(sb.from('orders').update({ status: sel.value }).eq('id', o.id).select('id'));
+            if (!d || !d.length) throw new Error('No se pudo actualizar: sin permiso.');
+            o.status = sel.value;
+            pills.forEach((p) => { p.textContent = sel.value; p.className = stCls(sel.value); });
+            sels.forEach((x) => (x.value = sel.value));
+            drawKpis();
+            toast('Estado actualizado: se avisa al cliente por email');
+          } catch (e) { sels.forEach((x) => (x.value = prevS || 'Pendiente de pago')); toast(e.message); }
+          sels.forEach((x) => (x.disabled = false));
+        });
+        return sel;
+      };
+      const mkActs = (inSheet) => {
+        const arcBtn = h('button', { class: 'x-btn x-btn--ghost x-btn--sm', type: 'button', text: isArch(o) ? 'Restaurar' : 'Archivar', onclick: () => { if (inSheet) closeAll(); setArchived(o, !isArch(o), btns); } });
+        const delBtn = h('button', { class: 'x-btn x-btn--danger x-btn--sm', type: 'button', text: 'Eliminar', 'aria-label': 'Eliminar pedido #' + (o.number || ''), onclick: () => delOrder(o, btns) });
+        btns.push(arcBtn, delBtn);
+        return [arcBtn, delBtn];
+      };
+      const statusField = (sel) => h('label', { class: 'x-field' }, h('span', { text: 'Estado (el cliente recibe un email al cambiarlo)' }), sel);
+      const detail = () => [
+          h('dl', { class: 'x-dl' },
+            h('dt', { text: 'Cliente' }), h('dd', { text: custName(c) || '—' }),
+            h('dt', { text: 'RUT' }), h('dd', { text: c.rut || '—' }),
+            h('dt', { text: 'Email' }), h('dd', null, c.email ? h('a', { class: 'x-link', href: 'mailto:' + c.email, text: c.email }) : '—'),
+            h('dt', { text: 'Teléfono' }), h('dd', null, c.phone ? h('a', { class: 'x-link', href: 'tel:' + c.phone, text: c.phone }) : '—'),
+            h('dt', { text: 'Dirección' }), h('dd', { text: fullAddr(c) || '—' }),
+            h('dt', { text: 'Envío' }), h('dd', { text: (o.shipping_method || '—') + ' · ' + clp(o.shipping_cost) }),
+            h('dt', { text: 'Pago' }), h('dd', { text: o.payment_method || '—' }),
+            discLabel(o) ? [h('dt', { text: 'Descuento' }), h('dd', { text: discLabel(o) })] : null,
+            h('dt', { text: 'Notas' }), h('dd', { text: o.notes || '—' })),
+          h('div', null, items.map((i) => h('div', { class: 'x-sumrow' }, h('span', { text: (i.qty || 1) + ' × ' + (i.name || 'Producto') + ([i.color, i.size].filter(Boolean).length ? ' (' + [i.color, i.size].filter(Boolean).join(' · ') + ')' : '') }), h('span', { text: clp((i.price || 0) * (i.qty || 1)) }))),
+            h('div', { class: 'x-sumrow' }, h('span', { text: 'Subtotal' }), h('span', { text: clp(o.subtotal) })),
+            Number(o.discount) > 0 ? h('div', { class: 'x-sumrow' }, h('span', { text: 'Descuento' + (o.coupon ? ' (' + o.coupon + ')' : '') }), h('span', { text: '-' + clp(o.discount) })) : null,
+            h('div', { class: 'x-sumrow' }, h('span', { text: 'Envío' }), h('span', { text: clp(o.shipping_cost) })),
+            h('div', { class: 'x-sumrow' }, h('span', { text: 'Total' }), h('span', { text: clp(o.total) })))];
+      const sub = (custName(c) || 'Sin nombre') + ' · ' + fdate(o.created_at) + (discLabel(o) ? ' · ' + discLabel(o) : '');
+      if (!phone) {
+        const [arcBtn, delBtn] = mkActs(false);
+        const det = h('details', { class: 'x-ord' + (isArch(o) ? ' is-arch' : ''), open: openIds.has(o.id) });
+        det.addEventListener('toggle', () => { if (det.open) openIds.add(o.id); else openIds.delete(o.id); });
+        list.append(det);
+        det.append(
+          h('summary', null, h('b', { text: '#' + (o.number || '') }), mkSt(), h('small', { text: sub }), h('small', { style: 'text-align:right;color:var(--x-sand)', text: clp(o.total) })),
+          h('div', { class: 'x-ord__body' }, detail(), statusField(mkSel()), h('div', { class: 'x-ord__act' }, arcBtn, delBtn)));
+        return;
+      }
+      const openSheet = () => {
+        const [arcBtn, delBtn] = mkActs(true);
+        openModal(h('div', { class: 'x-dlg' },
+          h('h2', { text: 'Pedido #' + (o.number || '') }),
+          h('div', { class: 'x-ocard__top' }, mkSt(), h('small', { class: 'x-muted', text: fdate(o.created_at) })),
+          detail(), statusField(mkSel()),
+          h('div', { class: 'x-ord__act' }, arcBtn, delBtn)), 'Pedido #' + (o.number || ''), true);
+      };
+      const [arcBtn, delBtn] = mkActs(false);
+      list.append(h('article', { class: 'x-ocard' + (isArch(o) ? ' is-arch' : ''), 'aria-label': 'Pedido #' + (o.number || '') },
+        h('div', { class: 'x-ocard__top' }, h('b', { text: '#' + (o.number || '') }), mkSt()),
+        h('p', { class: 'x-ocard__who', text: custName(c) || 'Sin nombre' }),
+        h('p', { class: 'x-ocard__meta' }, h('span', { text: fdate(o.created_at) + (discLabel(o) ? ' · ' + discLabel(o) : '') }), h('b', { text: clp(o.total) })),
+        statusField(mkSel()),
+        h('div', { class: 'x-ocard__act' }, h('button', { class: 'x-btn x-btn--sm', type: 'button', text: 'Ver detalle', onclick: openSheet }), arcBtn),
+        h('div', { class: 'x-ocard__del' }, delBtn)));
+    });
+  };
+  const onBp = () => { if (document.contains(list)) draw(); else PHONE.removeEventListener('change', onBp); };
+  if (PHONE.addEventListener) PHONE.addEventListener('change', onBp);
+  qi.addEventListener('input', draw); fsel.addEventListener('change', draw);
+  await load();
+  body.textContent = '';
+  body.append(
+    kpis,
+    h('div', { class: 'x-tools' }, seg, bulkBtn),
+    h('div', { class: 'x-tools' }, qi, fsel, h('button', { class: 'x-btn x-btn--ghost x-btn--sm', type: 'button', text: 'Exportar CSV', onclick: () => downloadCSV('pedidos', [
+      ['Número', (o) => o.number], ['Fecha', (o) => fdate(o.created_at)], ['Estado', (o) => o.status], ['Cliente', (o) => custName(o.customers)], ['RUT', (o) => o.customers && o.customers.rut], ['Email', (o) => o.customers && o.customers.email], ['Teléfono', (o) => o.customers && o.customers.phone], ['Dirección', (o) => fullAddr(o.customers)],
+      ['Items', (o) => arr(o.items).map((i) => (i.qty || 1) + 'x ' + i.name + (i.size ? ' ' + i.size : '') + (i.color ? ' ' + i.color : '')).join(' | ')], ['Subtotal', (o) => o.subtotal], ['Descuento', (o) => o.discount || 0], ['Cupón', (o) => o.coupon], ['Envío', (o) => o.shipping_cost], ['Total', (o) => o.total], ['Método envío', (o) => o.shipping_method], ['Pago', (o) => o.payment_method], ['Notas', (o) => o.notes], ['Archivado', (o) => (isArch(o) ? 'Sí' : 'No')]], rowsAll) })),
+    list,
+    h('p', { class: 'x-muted x-small', style: 'margin-top:16px', text: 'Ventas totales suma pedidos Pagados, Enviados y Entregados, incluidos los archivados. Los pedidos eliminados dejan de contar.' }));
+  draw();
+}
+
+async function tabProductos(body) {
+  const [prods, st] = await Promise.all([q(sb.from('products').select('*').order('sort', { ascending: true })), loadSettings().catch(() => ({}))]);
+  const list = prods || [];
+  const cats = arr(st.categories).filter((c) => c && c.name);
+  const low = [];
+  list.filter((p) => p.active).forEach((p) => lowCombos(p, 2).forEach((c) => low.push([p.name, c.label, c.n <= 0 ? 'agotado' : 'quedan ' + c.n].filter(Boolean).join(' · '))));
+  body.textContent = '';
+  body.append(
+    h('div', { class: 'x-kpis' }, kpi(list.filter((p) => p.active).length, 'Productos activos'), kpi(list.length, 'Productos en total'), kpi(low.length, 'Combinaciones con stock bajo')),
+    h('div', { class: 'x-tools' }, h('button', { class: 'x-btn', type: 'button', text: '+ Nuevo producto', onclick: () => productForm(null, list.length, cats) })));
+  if (low.length) body.append(h('details', { class: 'x-ord', style: 'margin-bottom:16px' }, h('summary', null, h('b', { text: 'Stock bajo (2 o menos por talla y color)' }), h('small', { text: String(low.length) })), h('div', { class: 'x-ord__body' }, h('ul', { style: 'margin:0;padding-left:18px' }, low.map((t) => h('li', { text: t }))))));
+  if (!list.length) body.append(h('p', { class: 'x-muted', text: 'Aún no hay productos.' }));
+  body.append(h('div', { class: 'x-list' }, list.map((p) => {
+    const tog = h('input', { type: 'checkbox', checked: !!p.active });
+    tog.addEventListener('change', async () => {
+      tog.disabled = true;
+      try { await q(sb.from('products').update({ active: tog.checked }).eq('id', p.id)); p.active = tog.checked; toast(tog.checked ? 'Producto activado' : 'Producto oculto'); }
+      catch (e) { tog.checked = !tog.checked; toast(e.message); }
+      tog.disabled = false;
+    });
+    const nImg = arr(p.images).length || (p.image_url ? 1 : 0);
+    return h('div', { class: 'x-item' }, pimg(p),
+      h('div', null, h('h3', null, p.name, p.badge ? h('span', { class: 'x-badge', text: p.badge }) : null, lowCombos(p, 2).length ? h('span', { class: 'x-badge', text: 'stock bajo' }) : null),
+        h('p', { text: clp(p.price) + (Number(p.compare_price) > 0 ? ' (antes ' + clp(p.compare_price) + ')' : '') + ' · Stock ' + totalStock(p) + (Number(p.limited_total) > 0 ? ' de ' + p.limited_total + ' (edición limitada)' : '') + (p.category ? ' · ' + p.category : '') + ' · ' + nImg + (nImg === 1 ? ' foto' : ' fotos') }),
+        h('p', { text: [arr(p.sizes).join(' '), arr(p.colors).join(', ')].filter(Boolean).join(' · ') })),
+      h('div', { class: 'x-item__act' },
+        h('label', { class: 'x-switch' }, tog, 'Activo'),
+        h('button', { class: 'x-btn x-btn--ghost x-btn--sm', type: 'button', text: 'Editar', onclick: () => productForm(p, 0, cats) }),
+        h('button', { class: 'x-btn x-btn--danger x-btn--sm', type: 'button', text: 'Eliminar', onclick: async () => {
+          if (!confirm('¿Eliminar “' + p.name + '”? Esta acción no se puede deshacer.')) return;
+          try { await q(sb.from('products').delete().eq('id', p.id)); toast('Producto eliminado'); renderPanel(); }
+          catch (e) { toast(/uso|foreign|violates/i.test(e.message) ? 'No se puede eliminar: tiene pedidos. Desactívalo en su lugar.' : e.message); }
+        } })));
+  })));
+}
+function tagEditor(label, values, presets, onChange) {
+  let list = values.slice();
+  const box = h('div', { class: 'x-chips' });
+  const input = h('input', { class: 'x-in', placeholder: 'Agregar y Enter', autocomplete: 'off', enterkeyhint: 'done', style: 'flex:1 1 140px' });
+  const draw = () => {
+    box.textContent = '';
+    const all = presets.concat(list.filter((v) => !presets.includes(v)));
+    all.forEach((v) => box.append(h('button', { type: 'button', class: 'x-chip', 'aria-pressed': String(list.includes(v)), onclick: () => { list = list.includes(v) ? list.filter((x) => x !== v) : list.concat(v); draw(); } }, swatch(v), v)));
+    if (onChange) onChange();
+  };
+  const add = () => { const t = input.value.trim(); if (t && !list.includes(t)) list.push(t); input.value = ''; draw(); };
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); add(); } });
+  draw();
+  return { el: h('div', { class: 'x-field' }, h('span', { text: label }), box, h('div', { class: 'x-row' }, input, h('button', { type: 'button', class: 'x-btn x-btn--ghost x-btn--sm', style: 'flex:0 0 auto', text: 'Agregar', onclick: add }))), get: () => list };
+}
+// la primera foto es la principal
+function galleryEditor(initial, name, setBusy) {
+  let imgs = initial.slice(0, MAX_PHOTOS);
+  const grid = h('div', { class: 'x-gal' });
+  const note = h('p', { class: 'x-msg x-small', role: 'status' });
+  const file = h('input', { type: 'file', accept: IMG_TYPES.join(','), multiple: true, class: 'x-in', style: 'padding:10px', 'aria-label': 'Subir fotos' });
+  const urlIn = h('input', { class: 'x-in', type: 'url', inputmode: 'url', autocomplete: 'off', enterkeyhint: 'done', placeholder: 'o pega una URL de imagen y Enter', style: 'flex:1 1 200px' });
+  const move = (i, d) => { const j = i + d; if (j < 0 || j >= imgs.length) return; [imgs[i], imgs[j]] = [imgs[j], imgs[i]]; draw(); };
+  const draw = () => {
+    grid.textContent = '';
+    if (!imgs.length) grid.append(h('p', { class: 'x-muted x-small', style: 'margin:0', text: 'Sin fotos. La tienda mostrará una imagen genérica.' }));
+    imgs.forEach((u, i) => {
+      const im = h('img', { src: safeUrl(u) || BASE + '/logo-v.jpg', alt: 'Foto ' + (i + 1) + ' de ' + (name() || 'producto'), loading: 'lazy' });
+      grid.append(h('div', { class: 'x-gal__it' + (i === 0 ? ' is-main' : '') }, im,
+        h('p', { class: 'x-gal__tag', style: 'margin:0', text: i === 0 ? 'Principal' : 'Foto ' + (i + 1) }),
+        h('div', { class: 'x-gal__ctl' },
+          h('button', { type: 'button', 'aria-label': 'Mover a la izquierda', text: '←', disabled: i === 0, onclick: () => move(i, -1) }),
+          h('button', { type: 'button', 'aria-label': 'Mover a la derecha', text: '→', disabled: i === imgs.length - 1, onclick: () => move(i, 1) }),
+          h('button', { type: 'button', class: 'is-del', 'aria-label': 'Quitar foto ' + (i + 1), text: '✕', onclick: () => { imgs.splice(i, 1); draw(); } })),
+        i > 0 ? h('button', { type: 'button', class: 'x-btn x-btn--ghost', style: 'min-height:36px;padding:0 4px;font-size:11px;letter-spacing:.06em', text: 'Principal', onclick: () => { const [x] = imgs.splice(i, 1); imgs.unshift(x); draw(); } }) : null));
+    });
+    const full = imgs.length >= MAX_PHOTOS;
+    file.disabled = full; urlIn.disabled = full;
+    if (full && !note.dataset.busy) { note.className = 'x-msg x-small x-muted'; note.textContent = 'Máximo ' + MAX_PHOTOS + ' fotos por producto.'; }
+  };
+  file.addEventListener('change', async () => {
+    const files = Array.from(file.files || []);
+    if (!files.length) return;
+    const room = MAX_PHOTOS - imgs.length;
+    const take = files.slice(0, room);
+    setBusy(true); note.dataset.busy = '1';
+    let ok = 0, fail = 0, why = '';
+    for (let k = 0; k < take.length; k++) {
+      note.className = 'x-msg x-small'; note.textContent = 'Subiendo foto ' + (k + 1) + ' de ' + take.length + '…';
+      try { imgs.push(await uploadImg(take[k], '')); ok++; draw(); } catch (e) { fail++; why = e.message.replace(/\.$/, ''); }
+    }
+    delete note.dataset.busy;
+    file.value = '';
+    setBusy(false);
+    const extra = files.length - take.length;
+    note.className = 'x-msg x-small ' + (fail ? 'x-msg--err' : 'x-msg--ok');
+    note.textContent = (ok ? ok + (ok === 1 ? ' foto subida.' : ' fotos subidas.') : '') + (fail ? ' ' + fail + ' no se pudieron subir (' + why + ').' : '') + (extra > 0 ? ' ' + extra + ' quedaron fuera (máximo ' + MAX_PHOTOS + ').' : '');
+    draw();
+  });
+  urlIn.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    const u = urlIn.value.trim();
+    if (!safeUrl(u)) { note.className = 'x-msg x-small x-msg--err'; note.textContent = 'La URL debe empezar con https://'; return; }
+    if (imgs.length < MAX_PHOTOS && !imgs.includes(u)) imgs.push(u);
+    urlIn.value = ''; draw();
+  });
+  draw();
+  return {
+    el: h('div', { class: 'x-field' }, h('span', { text: 'Fotos (hasta ' + MAX_PHOTOS + '; la primera es la principal)' }), grid, file, h('div', { class: 'x-row' }, urlIn), note),
+    get: () => imgs.slice(),
+  };
+}
+function productForm(p, count, cats) {
+  const isNew = !p; p = p || { active: true, category: (cats && cats[0] && cats[0].name) || 'Ropa', sizes: [], colors: [], sort: (count || 0) + 1 };
+  let drawStock = null;
+  const SIZE_PRESETS = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Única'], COLOR_PRESETS = ['Negro', 'Arena', 'Oliva', 'Hueso'];
+  const sizes = tagEditor('Tallas', arr(p.sizes), SIZE_PRESETS, () => drawStock && drawStock());
+  const colors = tagEditor('Colores', arr(p.colors), COLOR_PRESETS, () => drawStock && drawStock());
+  const vs = Object.assign({}, vstock(p));
+  const ordered = (list, presets) => list.slice().sort((a, b) => (presets.includes(a) ? presets.indexOf(a) : 99) - (presets.includes(b) ? presets.indexOf(b) : 99));
+  const stockBox = h('div', { class: 'x-field' });
+  let singleStock = p.stock == null ? 0 : p.stock;
+  drawStock = () => {
+    stockBox.textContent = '';
+    const sz = ordered(sizes.get(), SIZE_PRESETS), cl = ordered(colors.get(), COLOR_PRESETS);
+    if (!sz.length || !cl.length) {
+      const si = inp('stock', singleStock, { type: 'number', min: 0, step: 1, inputmode: 'numeric' });
+      si.addEventListener('input', () => (singleStock = si.value));
+      stockBox.append(h('span', { text: 'Stock' }), si, h('p', { class: 'x-muted x-small', style: 'margin:0', text: 'Elige tallas y colores para cargar stock por combinación.' }));
+      return;
+    }
+    const tot = h('b', { text: '0' });
+    const sum = () => { let t = 0; sz.forEach((s) => cl.forEach((c) => (t += Math.max(0, Math.round(Number(vs[vkey(s, c)]) || 0))))); tot.textContent = String(t); };
+    const table = h('table', null,
+      h('thead', null, h('tr', null, h('th', { scope: 'col', text: 'Talla' }), cl.map((c) => h('th', { scope: 'col' }, swatch(c), ' ', c)))),
+      h('tbody', null, sz.map((s) => h('tr', null, h('th', { scope: 'row', text: s }), cl.map((c) => {
+        const k = vkey(s, c);
+        const i = h('input', { class: 'x-in', type: 'number', min: 0, step: 1, inputmode: 'numeric', 'data-vkey': k, 'aria-label': 'Stock ' + s + ' ' + c, value: String(vs[k] == null ? 0 : vs[k]) });
+        i.addEventListener('input', () => { vs[k] = i.value === '' ? 0 : Number(i.value); sum(); });
+        return h('td', null, i);
+      })))));
+    stockBox.append(h('span', { text: 'Stock por talla y color' }), h('div', { class: 'x-vgrid' }, table), h('p', { class: 'x-vtot' }, 'Total: ', tot, ' unidades'));
+    sum();
+  };
+  drawStock();
+  const msg = h('p', { class: 'x-msg x-msg--err', role: 'alert' });
+  const btn = h('button', { class: 'x-btn x-btn--block x-save', type: 'submit', text: isNew ? 'Crear producto' : 'Guardar cambios' });
+  let uploading = false;
+  const nameIn = inp('name', p.name, { required: true, autocomplete: 'off' });
+  const startImgs = arr(p.images).length ? arr(p.images) : p.image_url ? [p.image_url] : [];
+  const gal = galleryEditor(startImgs, () => nameIn.value.trim(), (b) => { uploading = b; btn.disabled = b; });
+  let cat;
+  if (cats && cats.length) {
+    const names = cats.map((c) => c.name);
+    if (p.category && !names.includes(p.category)) names.push(p.category);
+    cat = h('select', { class: 'x-in', name: 'category' }, names.map((c) => {
+      const meta = cats.find((x) => x.name === c);
+      return h('option', { value: c, text: c + (meta && meta.active === false ? ' (oculta)' : ''), selected: p.category === c });
+    }));
+  } else {
+    cat = h('input', { class: 'x-in', name: 'category', value: p.category || '', list: 'vkCats', placeholder: 'Ej. Ropa' });
+  }
+  const act = h('input', { type: 'checkbox', name: 'active', checked: !!p.active });
+  const form = h('form', { class: 'x-form', novalidate: true },
+    h('h2', { class: 'x-h', style: 'font-size:18px', text: isNew ? 'Nuevo producto' : 'Editar producto' }),
+    field('Nombre', nameIn),
+    field('Descripción', h('textarea', { class: 'x-in', name: 'description', rows: 3, value: p.description || '' })),
+    h('div', { class: 'x-row' },
+      field('Precio (CLP)', inp('price', p.price, { type: 'number', min: 0, step: 1, inputmode: 'numeric', required: true })),
+      field('Precio anterior (tachado)', inp('compare_price', p.compare_price, { type: 'number', min: 0, step: 1, inputmode: 'numeric' }), 'Opcional. Mayor que el precio.')),
+    h('div', { class: 'x-row' },
+      field('Etiqueta', inp('badge', p.badge, { maxlength: 40, list: 'vkBadges', placeholder: 'Ej. Nuevo / Edición limitada' }), 'Opcional.'),
+      field('Edición limitada: total de unidades', inp('limited_total', p.limited_total, { type: 'number', min: 1, step: 1, inputmode: 'numeric' }), 'Opcional. La tienda muestra “Quedan N de M” con el stock.')),
+    h('datalist', { id: 'vkBadges' }, ['Nuevo', 'Edición limitada', 'Oferta', 'Más vendido'].map((c) => h('option', { value: c }))),
+    gal.el,
+    sizes.el, colors.el, stockBox,
+    h('div', { class: 'x-row' }, field('Categoría', cat, cats && cats.length ? null : 'Crea categorías en Personalizar para elegirlas de una lista.'), field('Orden', inp('sort', p.sort == null ? '' : p.sort, { type: 'number', step: 1, inputmode: 'numeric' }))),
+    h('datalist', { id: 'vkCats' }, ['Ropa', 'Accesorios'].map((c) => h('option', { value: c }))),
+    h('label', { class: 'x-check' }, act, 'Activo (visible en la tienda)'),
+    msg, btn);
+  let saving = false;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (saving || uploading) return;
+    msg.textContent = '';
+    const name = nameIn.value.trim(), price = Number(form.elements.price.value);
+    if (!name) { msg.textContent = 'El nombre es obligatorio.'; return; }
+    if (!(price >= 0) || form.elements.price.value === '') { msg.textContent = 'Escribe un precio válido.'; return; }
+    let compare, limited;
+    try { compare = optInt(form.elements.compare_price.value, 'Precio anterior', 0); limited = optInt(form.elements.limited_total.value, 'Edición limitada', 1); }
+    catch (err) { msg.textContent = err.message; return; }
+    if (compare != null && compare <= Math.round(price)) { msg.textContent = 'El precio anterior debe ser mayor que el precio, o déjalo vacío.'; form.elements.compare_price.focus(); return; }
+    const sz = sizes.get(), cl = colors.get();
+    const images = gal.get();
+    const row = { name, description: form.elements.description.value.trim(), price: Math.round(price), badge: form.elements.badge.value.trim() || null, compare_price: compare, limited_total: limited, sizes: sz, colors: cl, category: String(cat.value || '').trim() || null, images, image_url: images[0] || null, active: act.checked };
+    if (sz.length && cl.length) {
+      const out = {};
+      for (const s of sz) for (const c of cl) {
+        const n = Number(vs[vkey(s, c)] == null ? 0 : vs[vkey(s, c)]);
+        if (!(n >= 0) || !Number.isFinite(n)) { msg.textContent = 'El stock de ' + s + ' ' + c + ' no puede ser negativo.'; const bad = stockBox.querySelector('[data-vkey="' + CSS.escape(vkey(s, c)) + '"]'); if (bad) bad.focus(); return; }
+        out[vkey(s, c)] = Math.round(n);
+      }
+      row.variant_stock = out;
+    } else {
+      const stock = Number(singleStock === '' ? 0 : singleStock);
+      if (!(stock >= 0)) { msg.textContent = 'El stock no puede ser negativo.'; return; }
+      row.variant_stock = {};
+      row.stock = Math.round(stock);
+    }
+    const so = form.elements.sort.value; if (so !== '') row.sort = Number(so);
+    saving = true; btn.disabled = true; btn.textContent = 'Guardando…';
+    try {
+      if (isNew) await q(sb.from('products').insert(row).select('id'));
+      else {
+        const d = await q(sb.from('products').update(row).eq('id', p.id).select('id'));
+        if (!d || !d.length) throw new Error('No se guardó: sin permiso.');
+      }
+      closeAll(); toast(isNew ? 'Producto creado' : 'Cambios guardados'); renderPanel();
+    } catch (err) { msg.textContent = err.message; saving = false; btn.disabled = false; btn.textContent = isNew ? 'Crear producto' : 'Guardar cambios'; }
+  });
+  openModal(h('div', { style: 'padding:24px 20px 28px' }, form), isNew ? 'Nuevo producto' : 'Editar producto', true);
+}
+
+async function tabClientes(body) {
+  const rows = (await q(sb.from('customers').select('*').order('created_at', { ascending: false }))) || [];
+  const qi = h('input', { class: 'x-in', type: 'search', placeholder: 'Buscar por nombre, RUT o email', 'aria-label': 'Buscar clientes', autocomplete: 'off', enterkeyhint: 'search', spellcheck: 'false' });
+  const tb = h('tbody');
+  const count = h('p', { class: 'x-muted x-small' });
+  const draw = () => {
+    const t = norm(qi.value).replace(/\./g, '');
+    tb.textContent = '';
+    const f = rows.filter((c) => !t || norm([custName(c), c.rut, c.email, c.phone, c.comuna].join(' ')).replace(/\./g, '').includes(t));
+    count.textContent = f.length === rows.length ? rows.length + ' clientes' : f.length + ' de ' + rows.length + ' clientes';
+    if (!f.length) tb.append(h('tr', null, h('td', { colspan: 5, class: 'x-muted', text: rows.length ? 'Sin resultados.' : 'Aún no hay clientes.' })));
+    f.forEach((c) => tb.append(h('tr', null, h('td', { class: 'x-tbl__key', text: custName(c) || 'Sin nombre' }), h('td', { 'data-label': 'RUT', text: c.rut || '—' }), h('td', { 'data-label': 'Email' }, c.email ? h('a', { class: 'x-link', href: 'mailto:' + c.email, text: c.email }) : '—'), h('td', { 'data-label': 'Teléfono' }, c.phone ? h('a', { class: 'x-link', href: 'tel:' + c.phone, text: c.phone }) : '—'), h('td', { 'data-label': 'Dirección', text: fullAddr(c) || '—' }))));
+  };
+  qi.addEventListener('input', draw);
+  body.textContent = '';
+  body.append(h('div', { class: 'x-tools' }, qi, h('button', { class: 'x-btn x-btn--ghost x-btn--sm', type: 'button', text: 'Exportar CSV', onclick: () => downloadCSV('clientes', [['Nombre', (c) => c.first_name], ['Apellido', (c) => c.last_name], ['RUT', (c) => c.rut], ['Email', (c) => c.email], ['Teléfono', (c) => c.phone], ['Región', (c) => c.region], ['Comuna', (c) => c.comuna], ['Dirección', (c) => c.address], ['Depto/Casa', (c) => c.address2], ['Creado', (c) => fdate(c.created_at)]], rows) })),
+    count,
+    h('div', { class: 'x-scroll' }, h('table', { class: 'x-tbl' }, h('thead', null, h('tr', null, ['Nombre', 'RUT', 'Email', 'Teléfono', 'Dirección'].map((t) => h('th', { scope: 'col', text: t })))), tb)));
+  draw();
+}
+
+async function tabNews(body) {
+  const rows = (await q(sb.from('newsletter').select('*').order('created_at', { ascending: false }))) || [];
+  body.textContent = '';
+  body.append(h('div', { class: 'x-kpis' }, kpi(rows.length, 'Suscriptores')),
+    h('div', { class: 'x-tools' },
+      h('button', { class: 'x-btn x-btn--ghost x-btn--sm', type: 'button', text: 'Exportar CSV', onclick: () => downloadCSV('suscriptores', [['Email', (r) => r.email], ['Fecha', (r) => fdate(r.created_at)]], rows) }),
+      rows.length ? h('button', { class: 'x-btn x-btn--ghost x-btn--sm', type: 'button', text: 'Copiar emails', onclick: async () => { try { await navigator.clipboard.writeText(rows.map((r) => r.email).join(', ')); toast('Emails copiados'); } catch (e) { toast('No se pudo copiar'); } } }) : null),
+    h('div', { class: 'x-scroll' }, h('table', { class: 'x-tbl' }, h('thead', null, h('tr', null, h('th', { scope: 'col', text: 'Email' }), h('th', { scope: 'col', text: 'Fecha' }))),
+      h('tbody', null, rows.length ? rows.map((r) => h('tr', null, h('td', { class: 'x-tbl__key', text: r.email }), h('td', { 'data-label': 'Fecha', text: fdate(r.created_at) }))) : h('tr', null, h('td', { colspan: 2, class: 'x-muted', text: 'Aún no hay suscriptores.' }))))));
+}
+
+async function tabAjustes(body) {
+  const s = await loadSettings();
+  const btn = h('button', { class: 'x-btn x-save', type: 'submit', text: 'Guardar cambios' });
+  const form = h('form', { class: 'x-form x-panel', style: 'max-width:640px', novalidate: true },
+    field('Nombre de la tienda', inp('store_name', s.store_name, { autocomplete: 'organization' })),
+    field('WhatsApp (con código país, ej. 56912345678)', inp('whatsapp', s.whatsapp, { type: 'tel', inputmode: 'tel', autocomplete: 'tel' })),
+    field('Datos de transferencia', h('textarea', { class: 'x-in', name: 'transfer_info', rows: 6, value: s.transfer_info || '' })),
+    field('Costo de envío a domicilio (CLP, 0 = por pagar al recibir)', inp('shipping_cost', s.shipping_cost == null ? 0 : s.shipping_cost, { type: 'number', min: 0, step: 1, inputmode: 'numeric' })),
+    btn);
+  let busy = false;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (busy) return;
+    const row = { store_name: form.elements.store_name.value.trim(), whatsapp: form.elements.whatsapp.value.replace(/[^\d]/g, ''), transfer_info: form.elements.transfer_info.value.trim(), shipping_cost: Math.max(0, Math.round(Number(form.elements.shipping_cost.value) || 0)) };
+    busy = true; btn.disabled = true;
+    try { await saveSettings(row); toast('Ajustes guardados'); }
+    catch (err) { toast('Error: ' + err.message); }
+    busy = false; btn.disabled = false;
+  });
+  body.textContent = '';
+  body.append(form);
+}
+
+const THEME_DEF = { logo_url: '', primary_color: '#5e6b3a', accent_color: '#c9b99a', background_color: '#0e0e0e', text_color: '#ede8de', hero_title: '', hero_subtitle: '', announcement_text: '', footer_text: '' };
+const MODULES = [['newsletter', 'Newsletter'], ['seguimiento', 'Seguimiento de pedidos'], ['cuentas', 'Cuentas de clientes'], ['guia_tallas', 'Guía de tallas'], ['banners', 'Banners']];
+function imageField(label, get, set, folder, form) {
+  const PH = BASE + '/logo-v.jpg';
+  const prev = h('img', { class: 'x-thumb', alt: 'Vista previa', src: safeUrl(get()) || PH });
+  const url = h('input', { class: 'x-in', type: 'url', inputmode: 'url', autocomplete: 'off', spellcheck: 'false', placeholder: 'https://…', value: get() || '', 'aria-label': label + ' (URL)' });
+  const note = h('p', { class: 'x-msg x-small', role: 'status' });
+  const file = h('input', { type: 'file', accept: IMG_TYPES.join(','), class: 'x-in', style: 'padding:10px', 'aria-label': 'Subir ' + label.toLowerCase() });
+  const apply = (u) => { set(u); url.value = u; prev.src = safeUrl(u) || PH; };
+  url.addEventListener('input', () => { const u = url.value.trim(); set(u); if (safeUrl(u)) prev.src = u; });
+  file.addEventListener('change', async () => {
+    const f = file.files && file.files[0]; if (!f) return;
+    const fm = form(); if (fm) fm.dataset.uploading = '1';
+    note.className = 'x-msg x-small'; note.textContent = 'Subiendo imagen…';
+    try { apply(await uploadImg(f, folder)); note.className = 'x-msg x-small x-msg--ok'; note.textContent = 'Imagen subida. Recuerda guardar.'; }
+    catch (e) { note.className = 'x-msg x-small x-msg--err'; note.textContent = e.message; }
+    if (fm) delete fm.dataset.uploading;
+    file.value = '';
+  });
+  return h('div', { class: 'x-field' }, h('span', { text: label }), h('div', { style: 'display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap' }, prev, h('div', { style: 'flex:1 1 220px;display:grid;gap:8px' }, file, url, note)));
+}
+function listEditor(items, blank, title, fields, addLabel) {
+  const wrap = h('div', { style: 'display:grid;gap:10px' });
+  const draw = () => {
+    wrap.textContent = '';
+    if (!items.length) wrap.append(h('p', { class: 'x-muted x-small', style: 'margin:0', text: 'Aún no hay elementos.' }));
+    items.forEach((it, i) => {
+      const act = h('input', { type: 'checkbox', checked: it.active !== false });
+      act.addEventListener('change', () => { it.active = act.checked; });
+      const mv = (d) => { const j = i + d; if (j < 0 || j >= items.length) return; [items[i], items[j]] = [items[j], items[i]]; draw(); };
+      wrap.append(h('div', { class: 'x-blk' },
+        h('div', { class: 'x-blk__top' }, h('b', { text: (i + 1) + '. ' + (title(it) || 'Sin título') }), h('label', { class: 'x-switch' }, act, 'Activo'),
+          h('span', { class: 'x-blk__sp' },
+            iconBtn('Subir', '↑', i === 0, () => mv(-1)),
+            iconBtn('Bajar', '↓', i === items.length - 1, () => mv(1)),
+            iconBtn('Eliminar', '✕', false, () => { if (confirm('¿Eliminar este elemento?')) { items.splice(i, 1); draw(); } }, true))),
+        fields(it, draw)));
+    });
+  };
+  draw();
+  return h('div', { style: 'display:grid;gap:10px' }, wrap, h('button', { type: 'button', class: 'x-btn x-btn--ghost x-btn--sm', style: 'justify-self:start', text: addLabel, onclick: () => { items.push(blank()); draw(); } }));
+}
+
+async function tabPersonalizar(body) {
+  const s = await loadSettings();
+  const theme = Object.assign({}, THEME_DEF, (s.theme && typeof s.theme === 'object') ? s.theme : {});
+  const banners = arr(s.banners).filter((b) => b && typeof b === 'object').map((b) => Object.assign({ image_url: '', title: '', subtitle: '', button_text: '', button_link: '', active: true }, b));
+  const cats = arr(s.categories).filter((c) => c && typeof c === 'object').map((c) => Object.assign({ name: '', slug: '', image_url: '', active: true, sort: 0 }, c, { _slugTouched: !!c.slug })).sort((a, b) => (Number(a.sort) || 0) - (Number(b.sort) || 0));
+  const mods = Object.assign({ newsletter: true, seguimiento: true, cuentas: true, guia_tallas: true, banners: true }, (s.modules && typeof s.modules === 'object') ? s.modules : {});
+
+  const pv = {
+    ann: h('div', { class: 'x-mini__ann' }), logo: h('img', { class: 'x-mini__logo', alt: 'Logo' }),
+    title: h('h3'), sub: h('p'), cta: h('span', { text: 'Ver colección' }), foot: h('div', { class: 'x-mini__foot' }),
+  };
+  const preview = h('div', { class: 'x-mini', 'aria-label': 'Vista previa del tema' }, pv.ann, h('div', { class: 'x-mini__hero' }, pv.logo, pv.title, pv.sub, pv.cta), pv.foot);
+  const upd = () => {
+    const c = (k) => (isHex(theme[k]) ? theme[k] : THEME_DEF[k]);
+    preview.style.background = c('background_color'); preview.style.color = c('text_color');
+    pv.ann.style.background = c('primary_color'); pv.ann.style.color = c('text_color');
+    pv.ann.textContent = theme.announcement_text || ''; pv.ann.hidden = !theme.announcement_text;
+    pv.logo.src = safeUrl(theme.logo_url) || BASE + '/logo-wordmark.jpg';
+    pv.title.textContent = theme.hero_title || 'Título del inicio'; pv.title.style.color = c('text_color');
+    pv.sub.textContent = theme.hero_subtitle || 'Subtítulo del inicio';
+    pv.cta.style.background = c('primary_color'); pv.cta.style.color = c('text_color'); pv.cta.style.border = '1px solid ' + c('accent_color');
+    pv.foot.textContent = theme.footer_text || '© Volkarra · La Araucanía, Chile';
+  };
+  const colorField = (key, label) => {
+    const pick = h('input', { type: 'color', class: 'x-in', style: 'flex:0 0 64px', value: isHex(theme[key]) ? theme[key] : THEME_DEF[key], 'aria-label': label });
+    const hex = h('input', { class: 'x-in', value: theme[key] || '', maxlength: 7, autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': label + ' (hex)', style: 'flex:1 1 100px;font-family:"Geist Mono",monospace' });
+    pick.addEventListener('input', () => { theme[key] = pick.value; hex.value = pick.value; upd(); });
+    hex.addEventListener('input', () => { const v = hex.value.trim(); theme[key] = v; if (isHex(v)) pick.value = v; upd(); });
+    return h('div', { class: 'x-field' }, h('span', { text: label }), h('div', { class: 'x-row', style: 'flex-wrap:nowrap' }, pick, hex));
+  };
+  const txt = (key, label, area) => {
+    const el = area ? h('textarea', { class: 'x-in', rows: 2, value: theme[key] || '' }) : h('input', { class: 'x-in', value: theme[key] || '' });
+    el.addEventListener('input', () => { theme[key] = el.value; upd(); });
+    return field(label, el);
+  };
+  let themeForm;
+  const logo = imageField('Logo', () => theme.logo_url, (u) => { theme.logo_url = u; upd(); }, 'branding', () => themeForm);
+  themeForm = saveForm([
+    h('div', { class: 'x-cols' },
+      h('div', { style: 'display:grid;gap:14px' }, logo,
+        h('div', { class: 'x-cols' }, colorField('primary_color', 'Color principal'), colorField('accent_color', 'Color de acento'), colorField('background_color', 'Fondo'), colorField('text_color', 'Texto'))),
+      h('div', { style: 'display:grid;gap:8px;align-content:start' }, h('p', { class: 'x-optlabel', text: 'Vista previa' }), preview)),
+    h('div', { class: 'x-cols' }, txt('hero_title', 'Título del inicio'), txt('announcement_text', 'Barra de anuncio')),
+    txt('hero_subtitle', 'Subtítulo del inicio', true),
+    txt('footer_text', 'Texto del pie de página', true),
+  ], () => {
+    for (const k of ['primary_color', 'accent_color', 'background_color', 'text_color']) if (theme[k] && !isHex(theme[k])) throw new Error('Revisa los colores: usa formato #RRGGBB.');
+    const out = {}; Object.keys(THEME_DEF).forEach((k) => (out[k] = String(theme[k] || '').trim())); return { theme: out };
+  }, 'Tema guardado');
+  upd();
+
+  let bannerForm;
+  const bannerList = listEditor(banners, () => ({ image_url: '', title: '', subtitle: '', button_text: '', button_link: '', active: true }), (b) => b.title, (b, redraw) => h('div', { style: 'display:grid;gap:10px' },
+    imageField('Imagen', () => b.image_url, (u) => { b.image_url = u; }, 'banners', () => bannerForm),
+    h('div', { class: 'x-cols' }, field('Título', tIn(b, 'title', { onchange: redraw })), field('Subtítulo', tIn(b, 'subtitle'))),
+    h('div', { class: 'x-cols' }, field('Texto del botón', tIn(b, 'button_text', { placeholder: 'Ver colección' })), field('Enlace del botón', tIn(b, 'button_link', { placeholder: '#productos o https://…', inputmode: 'url', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false' })))), '+ Agregar banner');
+  bannerForm = saveForm([bannerList], () => {
+    if (banners.some((b) => !b.image_url && !b.title)) throw new Error('Cada banner necesita al menos una imagen o un título.');
+    return { banners: banners.map((b) => ({ image_url: String(b.image_url || '').trim(), title: String(b.title || '').trim(), subtitle: String(b.subtitle || '').trim(), button_text: String(b.button_text || '').trim(), button_link: String(b.button_link || '').trim(), active: b.active !== false })) };
+  }, 'Banners guardados');
+
+  let catForm;
+  const catList = listEditor(cats, () => ({ name: '', slug: '', image_url: '', active: true, sort: cats.length + 1 }), (c) => c.name, (c, redraw) => {
+    const slug = tIn(c, 'slug', { placeholder: 'se genera del nombre', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false' });
+    const name = tIn(c, 'name', { onchange: redraw });
+    name.addEventListener('input', () => { if (!c._slugTouched) { c.slug = slugify(name.value); slug.value = c.slug; } });
+    slug.addEventListener('input', () => { c._slugTouched = true; });
+    return h('div', { style: 'display:grid;gap:10px' },
+      h('div', { class: 'x-cols' }, field('Nombre', name), field('Slug (URL)', slug)),
+      imageField('Imagen', () => c.image_url, (u) => { c.image_url = u; }, 'categories', () => catForm));
+  }, '+ Agregar categoría');
+  catForm = saveForm([catList], () => {
+    const seen = {};
+    const out = cats.map((c, i) => {
+      const name = String(c.name || '').trim();
+      if (!name) throw new Error('Cada categoría necesita un nombre.');
+      const slug = slugify(c.slug || name);
+      if (seen[slug]) throw new Error('El slug “' + slug + '” está repetido.');
+      seen[slug] = 1;
+      return { name, slug, image_url: String(c.image_url || '').trim(), active: c.active !== false, sort: i + 1 };
+    });
+    return { categories: out };
+  }, 'Categorías guardadas');
+
+  const modForm = saveForm([h('div', { class: 'x-mods' }, MODULES.map(([k, l]) => {
+    const i = h('input', { type: 'checkbox', role: 'switch', checked: mods[k] !== false });
+    i.addEventListener('change', () => { mods[k] = i.checked; });
+    return h('label', { class: 'x-switch' }, i, l);
+  }))], () => { const out = {}; MODULES.forEach(([k]) => (out[k] = mods[k] !== false)); return { modules: out }; }, 'Módulos guardados');
+
+  body.textContent = '';
+  body.append(
+    section('Tema', 'Logo, colores y textos de la tienda. La vista previa cambia mientras editas.', themeForm),
+    section('Banners', 'Se muestran en el inicio en este orden. Solo los activos son visibles.', bannerForm),
+    section('Categorías', 'El formulario de productos usa esta lista.', catForm),
+    section('Módulos', 'Activa o desactiva secciones de la tienda.', modForm));
+}
+
+async function tabResenas(body) {
+  const [revs, prods] = await Promise.all([
+    q(sb.from('reviews').select('*').order('created_at', { ascending: false })),
+    q(sb.from('products').select('id,name')).catch(() => []),
+  ]);
+  const rows = revs || [];
+  const pname = (id) => { const p = (prods || []).find((x) => String(x.id) === String(id)); return p ? p.name : 'Producto eliminado'; };
+  const kp = h('div', { class: 'x-kpis' });
+  const chips = h('div', { class: 'x-chips', role: 'group', 'aria-label': 'Filtrar reseñas' });
+  const list = h('div', { class: 'x-list' });
+  const stars = (r) => { const n = Math.max(0, Math.min(5, Math.round(Number(r) || 0))); return h('span', { class: 'x-stars', 'aria-label': n + ' de 5 estrellas', text: '★'.repeat(n) + '☆'.repeat(5 - n) }); };
+  const setApproved = async (r, val) => {
+    const d = await q(sb.from('reviews').update({ approved: val }).eq('id', r.id).select('id'));
+    if (!d || !d.length) throw new Error('No se pudo actualizar: sin permiso.');
+    r.approved = val;
+  };
+  const act = (fn, okMsg) => async (e) => {
+    const b = e.currentTarget; b.disabled = true;
+    try { await fn(); toast(okMsg); draw(); } catch (err) { toast(err.message); b.disabled = false; }
+  };
+  function draw() {
+    const pend = rows.filter((r) => !r.approved).length, pub = rows.length - pend;
+    const pubRows = rows.filter((r) => r.approved);
+    const avg = pubRows.length ? (pubRows.reduce((a, r) => a + (Number(r.rating) || 0), 0) / pubRows.length).toFixed(1).replace('.', ',') : '—';
+    S.pendingReviews = pend; updTabBadge();
+    kp.textContent = '';
+    kp.append(kpi(pend, 'Pendientes'), kpi(pub, 'Publicadas'), kpi(avg, 'Nota promedio publicadas'));
+    const f = S.revFilter || 'pend';
+    chips.textContent = '';
+    [['pend', 'Pendientes (' + pend + ')'], ['pub', 'Publicadas (' + pub + ')'], ['all', 'Todas (' + rows.length + ')']].forEach(([k, l]) =>
+      chips.append(h('button', { type: 'button', class: 'x-chip', 'aria-pressed': String(f === k), text: l, onclick: () => { S.revFilter = k; draw(); } })));
+    const shown = rows.filter((r) => (f === 'all' ? true : f === 'pub' ? !!r.approved : !r.approved))
+      .sort((a, b) => (a.approved ? 1 : 0) - (b.approved ? 1 : 0) || new Date(b.created_at) - new Date(a.created_at));
+    list.textContent = '';
+    if (!shown.length) list.append(h('p', { class: 'x-muted', text: f === 'pend' ? 'No hay reseñas pendientes.' : f === 'pub' ? 'Aún no hay reseñas publicadas.' : 'Aún no hay reseñas.' }));
+    shown.forEach((r) => {
+      const photo = safeUrl(r.photo_url);
+      const thumb = photo
+        ? h('a', { href: photo, target: '_blank', rel: 'noopener noreferrer', 'aria-label': 'Ver foto de ' + (r.name || 'cliente') }, h('img', { src: photo, alt: 'Foto de la reseña', loading: 'lazy' }))
+        : h('div', { class: 'x-rv__ph', text: 'Sin foto' });
+      list.append(h('div', { class: 'x-item' }, thumb,
+        h('div', null,
+          h('h3', null, pname(r.product_id), h('span', { class: 'x-badge', text: r.approved ? 'Publicada' : 'Pendiente' })),
+          h('p', null, stars(r.rating), ' · ' + (r.name || 'Anónimo') + ' · ' + fdate(r.created_at)),
+          r.comment ? h('p', { class: 'x-rv__c', text: r.comment }) : null),
+        h('div', { class: 'x-item__act' },
+          !r.approved ? h('button', { type: 'button', class: 'x-btn x-btn--sm', text: 'Aprobar', onclick: act(() => setApproved(r, true), 'Reseña publicada') }) : null,
+          r.approved ? h('button', { type: 'button', class: 'x-btn x-btn--ghost x-btn--sm', text: 'Ocultar', onclick: act(() => setApproved(r, false), 'Reseña oculta') }) : null,
+          h('button', { type: 'button', class: 'x-btn x-btn--danger x-btn--sm', text: 'Eliminar', onclick: async (e) => {
+            if (!confirm('¿Eliminar la reseña de ' + (r.name || 'este cliente') + '? No se puede deshacer.')) return;
+            await act(async () => { const d = await q(sb.from('reviews').delete().eq('id', r.id).select('id')); if (!d || !d.length) throw new Error('No se pudo eliminar: sin permiso.'); rows.splice(rows.indexOf(r), 1); }, 'Reseña eliminada')(e);
+          } }))));
+    });
+  }
+  body.textContent = '';
+  body.append(kp, h('div', { class: 'x-tools' }, chips), list,
+    h('p', { class: 'x-muted x-small', style: 'margin-top:16px', text: 'Solo las reseñas aprobadas se muestran en la tienda. Ocultar la devuelve a pendientes.' }));
+  draw();
+}
+
+async function tabMarketing(body) {
+  const [s, prods] = await Promise.all([loadSettings(), q(sb.from('products').select('id,name,price,active,sort').order('sort', { ascending: true }))]);
+  const ex = isObj(s.extras) ? s.extras : {};
+  const products = prods || [];
+  const pById = (id) => products.find((p) => String(p.id) === String(id));
+
+  const thr = numIn(ex.free_shipping_threshold, { min: 0, placeholder: 'Vacío = desactivado' });
+  const ship = numIn(s.shipping_cost == null ? 0 : s.shipping_cost, { min: 0 });
+  const curShip = h('b', { text: clp(s.shipping_cost) });
+  const shipForm = actForm([
+    h('div', { class: 'x-cols' },
+      field('Envío gratis desde ($)', thr, 'Déjalo vacío para no ofrecer envío gratis.'),
+      field('Costo de envío a domicilio ($)', ship, '0 = por pagar al recibir. Es el mismo valor de Ajustes.')),
+    h('p', { class: 'x-muted x-small', style: 'margin:0' }, 'Solo se muestra si el costo de envío es mayor a $0. Costo actual: ', curShip, ' · ',
+      h('button', { type: 'button', class: 'x-link x-btnlink', text: 'Editar en Ajustes', onclick: () => goTab('ajustes') })),
+  ], async () => {
+    const t = optInt(thr.value, 'Envío gratis', 0);
+    const c = optInt(ship.value, 'Costo de envío', 0) || 0;
+    if (c !== Number(s.shipping_cost || 0)) { await saveSettings({ shipping_cost: c }); s.shipping_cost = c; curShip.textContent = clp(c); }
+    await saveExtras({ free_shipping_threshold: t });
+    return t != null && c === 0 ? 'Guardado. Ojo: con envío $0 no se muestra el envío gratis.' : 'Envío guardado';
+  });
+
+  const w = Object.assign({ enabled: false, percent: 10, code: '' }, isObj(ex.welcome) ? ex.welcome : {});
+  const wOn = h('input', { type: 'checkbox', role: 'switch', checked: !!w.enabled });
+  const wPct = numIn(w.percent, { min: 1, max: 50 });
+  const wCode = h('input', { class: 'x-in', value: w.code || '', maxlength: 30, autocomplete: 'off', autocapitalize: 'characters', spellcheck: 'false', style: 'font-family:"Geist Mono",monospace;text-transform:uppercase', placeholder: 'BIENVENIDA10' });
+  const welcomeForm = actForm([
+    h('label', { class: 'x-switch' }, wOn, 'Activar cupón de bienvenida'),
+    h('div', { class: 'x-cols' }, field('Porcentaje de descuento (1–50)', wPct), field('Código', wCode, 'Letras, números, guion. Sin espacios.')),
+  ], async () => {
+    const pct = optInt(wPct.value, 'Porcentaje', 1, 50);
+    if (pct == null) throw new Error('Porcentaje: escribe un número entre 1 y 50.');
+    const code = wCode.value.trim().toUpperCase().replace(/\s+/g, '');
+    if (wOn.checked && !code) throw new Error('Escribe el código del cupón.');
+    if (code && !/^[A-Z0-9_-]{3,30}$/.test(code)) throw new Error('El código usa solo letras, números, guion o guion bajo (3 a 30).');
+    wCode.value = code;
+    await saveExtras({ welcome: { enabled: wOn.checked, percent: pct, code } });
+    return wOn.checked ? 'Cupón activo: ' + code + ' (' + pct + '%)' : 'Cupón desactivado';
+  });
+
+  const waOn = h('input', { type: 'checkbox', role: 'switch', checked: ex.whatsapp_float !== false });
+  const ig = h('input', { class: 'x-in', value: ex.instagram || '', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', placeholder: 'mathy_adventure' });
+  const socialForm = actForm([
+    h('label', { class: 'x-switch' }, waOn, 'Mostrar botón flotante de WhatsApp'),
+    s.whatsapp ? h('p', { class: 'x-muted x-small', style: 'margin:-8px 0 0', text: 'Usa el número de Ajustes: +' + s.whatsapp }) : h('p', { class: 'x-msg x-msg--err x-small', style: 'margin:-8px 0 0' }, 'Falta el número de WhatsApp. ', h('button', { type: 'button', class: 'x-link x-btnlink', text: 'Agrégalo en Ajustes', onclick: () => goTab('ajustes') })),
+    field('Instagram (usuario sin @)', ig),
+  ], async () => {
+    const u = ig.value.trim().replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/[/?#].*$/, '').replace(/^@+/, '');
+    if (u && !/^[A-Za-z0-9._]{1,30}$/.test(u)) throw new Error('Instagram: usa solo letras, números, punto o guion bajo.');
+    ig.value = u;
+    await saveExtras({ whatsapp_float: waOn.checked, instagram: u || null });
+    return 'Redes guardadas';
+  });
+
+  let heroVideo = ex.hero_video || null;
+  const vidBox = h('div', { style: 'display:grid;gap:8px' });
+  const vNote = h('p', { class: 'x-msg x-small', role: 'status' });
+  const prog = h('progress', { class: 'x-prog', max: 100, value: 0, hidden: true, 'aria-label': 'Progreso de subida' });
+  const vFile = h('input', { type: 'file', accept: 'video/mp4,video/webm,.mp4,.webm', class: 'x-in', style: 'padding:10px;max-width:420px', 'aria-label': 'Subir video de portada' });
+  const rmBtn = h('button', { type: 'button', class: 'x-btn x-btn--danger x-btn--sm', style: 'justify-self:start', text: 'Quitar video' });
+  const drawVid = () => {
+    vidBox.textContent = '';
+    const src = safeUrl(heroVideo);
+    if (src) vidBox.append(h('video', { class: 'x-vid', src, controls: true, muted: true, playsinline: true, preload: 'metadata' }), h('a', { class: 'x-link x-small', href: src, target: '_blank', rel: 'noopener noreferrer', text: 'Abrir video' }));
+    else vidBox.append(h('p', { class: 'x-muted x-small', style: 'margin:0', text: 'Sin video. La portada usa la imagen.' }));
+    rmBtn.hidden = !heroVideo;
+  };
+  vFile.addEventListener('change', async () => {
+    const f = vFile.files && vFile.files[0]; if (!f) return;
+    const type = f.type || (/\.webm$/i.test(f.name) ? 'video/webm' : /\.mp4$/i.test(f.name) ? 'video/mp4' : '');
+    if (!VIDEO_TYPES[type]) { setNote(vNote, 'Usa un video MP4 o WebM.', 'err'); vFile.value = ''; return; }
+    if (f.size > MAX_VIDEO_BYTES) { setNote(vNote, 'El video pesa ' + mbText(f.size) + '. El máximo es 40 MB.', 'err'); vFile.value = ''; return; }
+    // aviso si pesa más de 8 mb
+    if (f.size > 8 * MB) {
+      const go = await confirmDlg({ title: 'Video pesado', msg: 'Los videos pesan mucho y gastan el tráfico gratis. Mejor súbelo a Instagram/YouTube o comprímelo bajo 8 MB.', ok: 'Continuar' });
+      if (!go) { vFile.value = ''; return; }
+    }
+    vFile.disabled = true; rmBtn.disabled = true; prog.hidden = false; prog.value = 0;
+    setNote(vNote, 'Subiendo video…');
+    try {
+      const path = 'site/hero-video-' + randomId() + VIDEO_TYPES[type];
+      const url = await putFile(path, f, type, (r) => { const pc = Math.round(r * 100); prog.value = pc; setNote(vNote, 'Subiendo video… ' + pc + '%'); });
+      setNote(vNote, 'Guardando…');
+      await saveExtras({ hero_video: url });
+      heroVideo = url; drawVid(); setNote(vNote, 'Video subido y guardado.', 'ok');
+    } catch (e) { setNote(vNote, e.message, 'err'); }
+    prog.hidden = true; vFile.disabled = false; rmBtn.disabled = false; vFile.value = '';
+  });
+  rmBtn.addEventListener('click', async () => {
+    if (!confirm('¿Quitar el video de portada?')) return;
+    rmBtn.disabled = true;
+    try { await saveExtras({ hero_video: null }); heroVideo = null; drawVid(); setNote(vNote, 'Video quitado.', 'ok'); }
+    catch (e) { setNote(vNote, e.message, 'err'); }
+    rmBtn.disabled = false;
+  });
+  drawVid();
+
+  const look = arr(ex.lookbook).filter(isObj).map((it) => Object.assign({}, it));
+  const lbList = h('div', { style: 'display:grid;gap:10px' });
+  const lbNote = h('p', { class: 'x-msg x-small', role: 'status' });
+  const lbFile = h('input', { type: 'file', accept: IMG_TYPES.join(','), multiple: true, class: 'x-in', style: 'padding:10px', 'aria-label': 'Agregar fotos al lookbook' });
+  const prodSelect = (it, empty) => {
+    const sel = h('select', { class: 'x-in' }, h('option', { value: '', text: empty }), products.map((p) => h('option', { value: String(p.id), text: p.name + (p.active ? '' : ' (oculto)'), selected: it.product_id != null && String(it.product_id) === String(p.id) })));
+    sel.addEventListener('change', () => { const p = pById(sel.value); it.product_id = p ? p.id : null; });
+    return sel;
+  };
+  const drawLb = () => {
+    lbList.textContent = '';
+    if (!look.length) lbList.append(h('p', { class: 'x-muted x-small', style: 'margin:0', text: 'Sin fotos propias todavía.' }));
+    look.forEach((it, i) => {
+      const mv = (d) => { const j = i + d; if (j < 0 || j >= look.length) return; [look[i], look[j]] = [look[j], look[i]]; drawLb(); };
+      lbList.append(h('div', { class: 'x-blk' },
+        h('div', { class: 'x-blk__top' }, h('b', { text: 'Foto ' + (i + 1) }),
+          h('span', { class: 'x-blk__sp' },
+            iconBtn('Subir', '↑', i === 0, () => mv(-1)),
+            iconBtn('Bajar', '↓', i === look.length - 1, () => mv(1)),
+            iconBtn('Eliminar foto ' + (i + 1), '✕', false, () => { if (confirm('¿Quitar esta foto del lookbook?')) { look.splice(i, 1); drawLb(); } }, true))),
+        h('div', { style: 'display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap' },
+          h('img', { class: 'x-thumb', src: safeUrl(it.image) || BASE + '/logo-v.jpg', alt: it.caption || 'Foto ' + (i + 1) + ' del lookbook', loading: 'lazy' }),
+          h('div', { style: 'flex:1 1 240px;display:grid;gap:10px' },
+            field('Texto', tIn(it, 'caption', { placeholder: 'Ej. Volcán Villarrica, invierno' })),
+            field('Producto', prodSelect(it, 'Sin producto'))))));
+    });
+  };
+  let lbForm;
+  lbFile.addEventListener('change', async () => {
+    const files = Array.from(lbFile.files || []); if (!files.length) return;
+    lbForm.dataset.uploading = '1'; lbFile.disabled = true;
+    let ok = 0, fail = 0, why = '';
+    for (let k = 0; k < files.length; k++) {
+      setNote(lbNote, 'Subiendo foto ' + (k + 1) + ' de ' + files.length + '…');
+      try {
+        const url = await uploadImg(files[k], 'site', 'lookbook-');
+        look.push({ image: url, caption: '', product_id: null }); ok++; drawLb();
+      } catch (e) { fail++; why = e.message.replace(/\.$/, ''); }
+    }
+    delete lbForm.dataset.uploading; lbFile.disabled = false; lbFile.value = '';
+    setNote(lbNote, (ok ? ok + (ok === 1 ? ' foto subida.' : ' fotos subidas.') + ' Agrega texto y producto, y guarda.' : '') + (fail ? ' ' + fail + ' no se pudieron subir (' + why + ').' : ''), fail ? 'err' : 'ok');
+  });
+  lbForm = actForm([lbList, h('div', { class: 'x-field' }, h('span', { text: 'Agregar fotos (se comprimen a 1600 px)' }), lbFile, lbNote)], async () => {
+    if (look.some((it) => !it.image)) throw new Error('Cada foto del lookbook necesita una imagen.');
+    const out = look.map((it) => Object.assign({}, it, { caption: String(it.caption || '').trim(), product_id: it.product_id == null ? null : it.product_id }));
+    await saveExtras({ lookbook: out });
+    return 'Lookbook guardado';
+  });
+  drawLb();
+
+  const bundles = arr(ex.bundles).filter(isObj).map((b) => Object.assign({}, b, { product_ids: (Array.isArray(b.product_ids) ? b.product_ids : []).filter((id) => pById(id)).map((id) => pById(id).id) }));
+  const pkList = h('div', { style: 'display:grid;gap:10px' });
+  const priceLine = (b, el) => {
+    el.textContent = '';
+    const ps = b.product_ids.map(pById).filter(Boolean);
+    if (ps.length < 2) { el.append('Elige 2 o más productos para ver el precio.'); return; }
+    const normal = ps.reduce((a, p) => a + (Number(p.price) || 0), 0);
+    const pct = Math.max(0, Math.min(50, Math.round(Number(b.percent) || 0)));
+    const pack = Math.round(normal * (100 - pct) / 100);
+    el.append('Precio normal ', h('s', { text: clp(normal) }), ' · Precio pack ', h('b', { text: clp(pack) }), ' · Ahorro ' + clp(normal - pack));
+  };
+  const drawPk = () => {
+    pkList.textContent = '';
+    if (!bundles.length) pkList.append(h('p', { class: 'x-muted x-small', style: 'margin:0', text: 'Aún no hay packs.' }));
+    bundles.forEach((b, i) => {
+      const price = h('p', { class: 'x-price', 'aria-live': 'polite' });
+      const on = h('input', { type: 'checkbox', checked: b.active !== false });
+      on.addEventListener('change', () => { b.active = on.checked; });
+      const pct = numIn(b.percent, { min: 1, max: 50 });
+      pct.addEventListener('input', () => { b.percent = pct.value === '' ? '' : Number(pct.value); priceLine(b, price); });
+      const chipsBox = h('div', { class: 'x-chips' }, products.map((p) => {
+        const sel = () => b.product_ids.some((id) => String(id) === String(p.id));
+        const c = h('button', { type: 'button', class: 'x-chip', 'aria-pressed': String(sel()), onclick: () => {
+          b.product_ids = sel() ? b.product_ids.filter((id) => String(id) !== String(p.id)) : b.product_ids.concat(p.id);
+          c.setAttribute('aria-pressed', String(sel())); priceLine(b, price);
+        } }, p.name + ' · ' + clp(p.price) + (p.active ? '' : ' (oculto)'));
+        return c;
+      }));
+      const title = h('b', { text: (i + 1) + '. ' + (b.name || 'Pack sin nombre') });
+      const nameIn = tIn(b, 'name', { placeholder: 'Ej. Pack Volcán' });
+      nameIn.addEventListener('input', () => { title.textContent = (i + 1) + '. ' + (b.name || 'Pack sin nombre'); });
+      pkList.append(h('div', { class: 'x-blk' },
+        h('div', { class: 'x-blk__top' }, title, h('label', { class: 'x-switch' }, on, 'Activo'),
+          h('span', { class: 'x-blk__sp' }, iconBtn('Eliminar pack ' + (i + 1), '✕', false, () => { if (confirm('¿Eliminar el pack “' + (b.name || 'sin nombre') + '”?')) { bundles.splice(i, 1); drawPk(); } }, true))),
+        h('div', { class: 'x-cols' }, field('Nombre', nameIn), field('Descuento del pack (%)', pct)),
+        h('div', { class: 'x-field' }, h('span', { text: 'Productos (2 o más)' }), chipsBox),
+        price));
+      priceLine(b, price);
+    });
+  };
+  const pkForm = actForm([pkList, h('button', { type: 'button', class: 'x-btn x-btn--ghost x-btn--sm', style: 'justify-self:start', text: '+ Agregar pack', onclick: () => { bundles.push({ id: 'pack-' + Date.now().toString(36), name: '', product_ids: [], percent: 10, active: true }); drawPk(); } })], async () => {
+    const out = bundles.map((b, i) => {
+      const name = String(b.name || '').trim();
+      if (!name) throw new Error('El pack ' + (i + 1) + ' necesita un nombre.');
+      if (b.product_ids.length < 2) throw new Error('“' + name + '” necesita 2 o más productos.');
+      const pct = optInt(b.percent, 'Descuento de “' + name + '”', 1, 50);
+      if (pct == null) throw new Error('Descuento de “' + name + '”: escribe un número entre 1 y 50.');
+      return Object.assign({}, b, { id: b.id || 'pack-' + Date.now().toString(36) + i, name, product_ids: b.product_ids.slice(), percent: pct, active: b.active !== false });
+    });
+    await saveExtras({ bundles: out });
+    return 'Packs guardados';
+  });
+  drawPk();
+
+  body.textContent = '';
+  body.append(
+    section('Envío gratis', 'Monto mínimo de compra para no cobrar envío.', shipForm),
+    section('Cupón de bienvenida', 'Se ofrece a clientes nuevos en la tienda.', welcomeForm),
+    section('WhatsApp e Instagram', null, socialForm),
+    section('Video de portada', 'MP4 o WebM, máximo 40 MB. Se guarda al terminar de subir.', vidBox, prog, h('div', { class: 'x-field' }, h('span', { text: heroVideo ? 'Reemplazar video' : 'Subir video' }), vFile), vNote, rmBtn),
+    section('Lookbook “En terreno”', 'Si está vacío, la tienda muestra las 4 fotos de ejemplo.', lbForm),
+    section('Packs', 'Productos que se venden juntos con descuento.', pkForm));
+}
+
+sb.auth.onAuthStateChange((ev) => {
+  if (ev === 'SIGNED_OUT' && S.step === 'panel') { S.step = 'login'; S.notice = 'Tu sesión terminó. Vuelve a ingresar.'; render(); }
+});
+// cierre por inactividad (mfa o panel)
+let lastActive = Date.now();
+['pointerdown', 'pointermove', 'keydown', 'wheel', 'touchstart', 'scroll'].forEach((ev) => document.addEventListener(ev, () => { lastActive = Date.now(); }, { capture: true, passive: true }));
+function checkIdle() {
+  if (S.step === 'login' || Date.now() - lastActive < IDLE_MS) return;
+  lastActive = Date.now();
+  logout('Sesión cerrada por inactividad. Vuelve a ingresar.');
+}
+setInterval(checkIdle, 15000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) checkIdle(); });
+
+render();
+})();
+    </script>
+    <script>
+// sandbox sin allow-forms: submit sintético
+(function () {
+  var FLAG = '__vkSynthSubmit';
+  function isSubmitBtn(el) {
+    if (!el || !el.tagName) return false;
+    var t = el.tagName, type = (el.getAttribute('type') || '').toLowerCase();
+    if (t === 'BUTTON') return !el.hasAttribute('type') || type === 'submit';
+    return t === 'INPUT' && type === 'submit';
+  }
+  function fire(form, submitter) {
+    if (!form) return;
+    var skipValidation = form.noValidate || (submitter && submitter.formNoValidate);
+    if (!skipValidation && form.reportValidity && !form.reportValidity()) return;
+    form[FLAG] = true;
+    setTimeout(function () { form[FLAG] = false; }, 50);
+    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+  }
+  document.addEventListener('click', function (e) {
+    var btn = e.target && e.target.closest ? e.target.closest('button, input[type=submit]') : null;
+    if (!isSubmitBtn(btn) || !btn.form || btn.disabled) return;
+    e.preventDefault();
+    fire(btn.form, btn);
+  }, true);
+  var NO_IMPLICIT = { button: 1, submit: 1, reset: 1, image: 1, file: 1, color: 1, range: 1, checkbox: 1, radio: 1 };
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' || e.defaultPrevented || e.isComposing || e.altKey || e.ctrlKey || e.metaKey) return;
+    var el = e.target;
+    if (!el || el.tagName !== 'INPUT' || !el.form || NO_IMPLICIT[(el.type || '').toLowerCase()]) return;
+    e.preventDefault();
+    var form = el.form, def = null;
+    for (var i = 0; i < form.elements.length; i++) { if (isSubmitBtn(form.elements[i])) { def = form.elements[i]; break; } }
+    if (def) { if (!def.disabled) def.click(); }
+    else fire(form, null);
+  });
+  document.addEventListener('submit', function (e) {
+    var form = e.target;
+    if (e.isTrusted && form && form[FLAG]) { e.preventDefault(); e.stopImmediatePropagation(); }
+  }, true);
+  if (window.HTMLFormElement) {
+    HTMLFormElement.prototype.requestSubmit = function (submitter) { fire(this, submitter || null); };
+  }
+})();
+    </script>
+  </body>
+</html>
