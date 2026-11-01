@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#F5F0E6" />
+    <meta name="theme-color" content="#0b0b0b" />
     <title>Volkarra — Ropa outdoor de La Araucanía, Chile</title>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -33,7 +33,7 @@
         "foundingDate": "2026",
         "foundingLocation": { "@type": "Place", "name": "Victoria, La Araucanía, Chile" },
         "description": "Ropa outdoor premium nacida en La Araucanía, Chile.",
-        "logo": "https://jqssfwthrckqykwjwbsg.supabase.co/storage/v1/object/public/products/site/logo-wordmark.jpg",
+        "logo": "https://jqssfwthrckqykwjwbsg.supabase.co/storage/v1/object/public/products/site/logo-volkarra-oscuro.png",
         "image": "https://jqssfwthrckqykwjwbsg.supabase.co/storage/v1/object/public/products/site/hero.jpg",
         "email": "mathyhas62@gmail.com",
         "telephone": "+56984045870",
@@ -48,7 +48,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap"
     />
     <link rel="stylesheet" href="hark.css" />
     <link rel="stylesheet" href="hark-hero.css" />
@@ -566,6 +566,210 @@
         .x-quizcta__acts .x-btn { flex: 1 1 auto; }
         .x-trust { justify-content: flex-start; padding: 8px 14px; gap: 0 18px; letter-spacing: .08em; }
       }
+    
+      /* ===== Rediseño nov 2026: outdoor premium. Negro, arena, oliva, blanco y naranjo de acento ===== */
+      :root {
+        --x-bg: #f1ebdf; --x-bg2: #faf7f1; --x-bg3: #e8dcc4; --x-bone: #0e0e0e; --x-dim: #5c564c;
+        --x-sand: #0e0e0e; --x-olive: #5b6b3a; --x-olive2: #4c5a30; --x-line: #dfd5c2; --x-line2: #b7aa92;
+        --x-ink: #0b0b0b; --x-paper: #ffffff; --x-arena: #e8dcc4; --x-foot-dim: #a8a196;
+        --x-orange: #d9622b; --x-orange2: #bf5220; --x-orange-ink: #b9501f; --x-orange-soft: #fbece3;
+        --x-cta: #0e0e0e; --x-cta2: #000000;
+        --x-ph: #e6ddca; --x-green: #4c5a30;
+        --x-shadow: 0 1px 2px rgba(0,0,0,.04), 0 14px 30px -20px rgba(0,0,0,.3);
+        --x-display: "Archivo", "Geist", system-ui, sans-serif;
+        --x-topo: url("topo.svg");
+      }
+      body { font-family: "Geist", system-ui, sans-serif; }
+      .x-h, .x-hero h1, .x-bn__copy h2, .x-dhead h2, .x-pd__body h2, .x-fd h2 { font-family: var(--x-display); font-stretch: 115%; }
+      .x-h { font-weight: 800; letter-spacing: .01em; font-size: clamp(28px, 5vw, 48px); line-height: 1; }
+      .x-eyebrow { color: var(--x-olive); font-weight: 600; letter-spacing: .3em; font-size: 11px; }
+      .x-eyebrow::before { content: ""; display: inline-block; width: 18px; height: 2px; background: var(--x-orange); vertical-align: middle; margin: -2px 10px 0 0; }
+      .x-link { color: var(--x-bone); text-decoration-color: var(--x-orange); }
+      .x-app :focus-visible { outline-color: var(--x-orange); }
+      .x-skel { background: linear-gradient(90deg, var(--x-ph), #f3ede2, var(--x-ph)); background-size: 200% 100%; }
+      .x-in::placeholder { color: #8f8677; }
+
+      /* botones: negro sólido; el naranjo queda para estados seleccionados y detalles */
+      .x-btn { border-radius: 0; letter-spacing: .16em; font-weight: 700; font-size: 12px; min-height: 52px; padding: 0 30px; background: var(--x-cta); border-color: var(--x-cta); }
+      .x-btn:hover { background: var(--x-orange); border-color: var(--x-orange); }
+      .x-btn:not(.x-btn--ghost) { color: #fff; }
+      .x-btn--ghost { background: transparent; border-color: var(--x-bone); color: var(--x-bone); }
+      .x-btn--ghost:hover { background: var(--x-bone); color: #fff; border-color: var(--x-bone); }
+      .x-chip { border-radius: 0; }
+      .x-chip[aria-pressed="true"] { border-color: var(--x-orange); background: var(--x-orange); color: #fff; }
+      .x-opt:has(input:checked) { border-color: var(--x-orange); background: var(--x-orange-soft); }
+      .x-check input, .x-opt input { accent-color: var(--x-orange); }
+      .x-in { border-radius: 0; background: #fff; }
+      .x-in:focus { border-color: var(--x-bone); box-shadow: 0 0 0 3px rgba(217,98,43,.18); }
+      .x-tabs button[aria-selected="true"] { color: var(--x-bone); border-bottom-color: var(--x-orange); }
+      .x-tot b, .x-sumrow:last-child span:last-child { color: var(--x-bone); }
+      .x-steps .is-now { color: var(--x-orange-ink); }
+      .x-steps .is-now i { background: var(--x-orange); border-color: var(--x-orange); box-shadow: 0 0 0 4px rgba(217,98,43,.2); }
+      .x-st--Pendiente { color: var(--x-orange-ink); border-color: var(--x-orange); }
+      .x-toast { background: var(--x-ink); border-left: 3px solid var(--x-orange); }
+
+      /* barra de anuncio */
+      .x-ann { background: var(--x-olive2); color: #fff; font-size: 11px; letter-spacing: .2em; padding: 9px 16px; }
+
+      /* header negro, logo original al centro en escritorio */
+      .x-bar { background: rgba(11,11,11,.9); color: #fff; border-bottom: 1px solid rgba(255,255,255,.08); }
+      .x-bar__in { height: 72px; max-width: 1400px; }
+      .x-bar .x-icon { color: #fff; }
+      .x-logo img { height: 48px; aspect-ratio: auto; width: auto; }
+      .x-nav a { color: #d9d3c7; font-weight: 600; font-size: 11px; letter-spacing: .22em; position: relative; }
+      .x-nav a:hover { color: #fff; }
+      .x-nav a::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: 12px; height: 2px; background: var(--x-orange); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--x-ease); }
+      .x-nav a:hover::after { transform: scaleX(1); }
+      .x-count { background: var(--x-orange); color: #fff; }
+      .x-app .x-bar :focus-visible { outline-color: var(--x-orange); }
+      @media (max-width: 899px) { .x-nav { display: none; } .x-bar__in .x-logo { margin-right: auto; } }
+      @media (min-width: 900px) {
+        .x-bar__in { display: grid; grid-template-columns: 1fr auto 1fr; padding: 0 28px; }
+        .x-bar__in .x-menubtn { display: none; }
+        .x-bar__in .x-nav { grid-column: 1; grid-row: 1; margin: 0; justify-self: start; gap: 10px; }
+        .x-bar__in .x-logo { grid-column: 2; grid-row: 1; justify-self: center; }
+        .x-bar__in #acctBtn { grid-column: 3; grid-row: 1; justify-self: end; margin-right: 48px; }
+        .x-bar__in #cartBtn { grid-column: 3; grid-row: 1; justify-self: end; }
+        .x-logo img { height: 54px; }
+        .x-nav .x-nav__opt, .x-nav .x-nav__opt2 { display: inline-flex; }
+      }
+
+      /* menú móvil: panel negro elegante */
+      .x-menu { background: #0b0b0b var(--x-topo) center / cover no-repeat; color: #fff; border-right: 0; box-shadow: 12px 0 40px rgba(0,0,0,.4); width: min(360px, 88vw); }
+      .x-menu .x-dhead { border-bottom-color: rgba(255,255,255,.1); }
+      .x-menu .x-icon { color: #fff; }
+      .x-menu nav a { color: #fff; border-bottom-color: rgba(255,255,255,.08); font-family: var(--x-display); font-stretch: 115%; font-weight: 700; font-size: 18px; letter-spacing: .06em; min-height: 60px; padding: 0 24px; }
+      .x-menu nav a:hover, .x-menu nav a:active { background: rgba(255,255,255,.05); color: var(--x-orange); }
+      .x-menu .x-link { color: #d9d3c7; }
+
+      /* portada cinematográfica */
+      .x-hero { min-height: calc(100svh - 72px); max-height: 1000px; align-items: flex-end; background: #0b0b0b; }
+      .x-hero img, .x-hero video { opacity: .9; }
+      .x-hero::after { background: linear-gradient(90deg, rgba(8,8,8,.7) 0%, rgba(8,8,8,.25) 55%, rgba(8,8,8,0) 100%), linear-gradient(180deg, rgba(8,8,8,.45) 0%, rgba(8,8,8,0) 30%, rgba(8,8,8,.85) 100%); }
+      .x-hero__copy { z-index: 2; padding: 64px 28px clamp(56px, 9vh, 96px); max-width: 1400px; }
+      .x-hero img.x-hero__logo { inset: auto; object-fit: contain; width: clamp(150px, 18vw, 230px); height: auto; margin: 0 0 26px; position: static !important; opacity: 1 !important; animation: none !important; }
+      .x-hero .x-eyebrow { color: #e8dcc4; margin-bottom: 16px; }
+      .x-hero h1 { font-weight: 900; font-size: clamp(42px, 9.5vw, 128px); line-height: .9; letter-spacing: -.005em; max-width: 12ch; color: #fff; text-transform: uppercase; }
+      .x-hero h1 span { font-family: "Geist", system-ui, sans-serif; font-stretch: normal; font-weight: 600; font-size: clamp(11px, 1.2vw, 13px); letter-spacing: .34em; color: var(--x-orange); margin-top: 22px; }
+      .x-hero p { font-size: clamp(16px, 1.6vw, 19px); color: #ece6da; max-width: 42ch; }
+      .x-hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+      .x-hero .x-btn:not(.x-btn--ghost) { background: #fff; border-color: #fff; color: #0e0e0e; }
+      .x-hero .x-btn:not(.x-btn--ghost):hover { background: var(--x-orange); border-color: var(--x-orange); color: #fff; }
+      .x-hero .x-btn--ghost { border-color: rgba(255,255,255,.75); color: #fff; }
+      .x-hero .x-btn--ghost:hover { background: #fff; color: #0e0e0e; }
+      .x-hero__scroll { position: absolute; z-index: 2; right: 28px; bottom: 28px; color: #e8dcc4; font-size: 10px; letter-spacing: .3em; text-transform: uppercase; writing-mode: vertical-rl; text-decoration: none; }
+      .x-hero__scroll::after { content: ""; display: block; width: 1px; height: 56px; margin: 12px auto 0; background: linear-gradient(var(--x-orange), transparent); }
+      @media (max-width: 700px) { .x-hero__scroll { display: none; } .x-hero__ctas .x-btn { flex: 1 1 100%; } }
+
+      /* franja en movimiento */
+      .x-strip { background: #0b0b0b; border: 0; overflow: hidden; }
+      .x-marquee { overflow: hidden; padding: 16px 0; border-top: 1px solid rgba(255,255,255,.06); }
+      .x-marquee__track { display: flex; width: max-content; animation: x-mq 40s linear infinite; }
+      .x-marquee__track span { flex: 0 0 auto; padding: 0 26px; color: #fff; font-family: var(--x-display); font-stretch: 115%; font-weight: 700; font-size: 12px; letter-spacing: .24em; text-transform: uppercase; white-space: nowrap; }
+      .x-marquee__track span::after { content: "▲"; font-size: 8px; color: var(--x-orange); margin-left: 52px; vertical-align: 2px; }
+      @keyframes x-mq { to { transform: translateX(-50%); } }
+      @media (prefers-reduced-motion: reduce) { .x-marquee__track { animation: none; } }
+
+      /* Founders 001 editorial */
+      .x-fd { background: #0b0b0b var(--x-topo) center / cover no-repeat; color: #fff; padding: clamp(64px, 9vw, 120px) 0; }
+      .x-fd__in { display: grid; gap: clamp(32px, 5vw, 72px); align-items: center; }
+      @media (min-width: 900px) { .x-fd__in { grid-template-columns: 1.1fr 1fr; } }
+      .x-fd__media { position: relative; display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; }
+      .x-fd__media img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 3/4; }
+      .x-fd__media img + img { margin-top: 48px; aspect-ratio: 3/4; height: auto; }
+      .x-fd__num { position: absolute; left: -6px; bottom: -18px; font-family: var(--x-display); font-stretch: 125%; font-weight: 900; font-size: clamp(64px, 10vw, 140px); line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(232,220,196,.55); pointer-events: none; }
+      .x-fd .x-eyebrow { color: #e8dcc4; }
+      .x-fd h2 { margin: 0 0 18px; font-weight: 900; font-size: clamp(40px, 7vw, 92px); line-height: .9; text-transform: uppercase; }
+      .x-fd h2 em { font-style: normal; color: var(--x-orange); }
+      .x-fd p { color: #cfc8bb; max-width: 46ch; margin: 0 0 16px; }
+      .x-fd ul { list-style: none; padding: 0; margin: 24px 0 32px; display: grid; gap: 0; border-top: 1px solid rgba(255,255,255,.12); max-width: 460px; }
+      .x-fd li { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.12); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: #e8dcc4; }
+      .x-fd li b { color: #fff; font-weight: 600; letter-spacing: .04em; text-transform: none; }
+      .x-fd .x-btn { background: #fff; border-color: #fff; color: #0e0e0e; }
+      .x-fd .x-btn:hover { background: var(--x-orange); border-color: var(--x-orange); color: #fff; }
+      .x-app .x-fd :focus-visible { outline-color: var(--x-orange); }
+
+      /* secciones */
+      .x-sec { padding: clamp(56px, 8vw, 110px) 0; border-bottom: 0; }
+      .x-wrap { max-width: 1400px; padding: 0 28px; }
+      @media (max-width: 520px) { .x-wrap { padding: 0 16px; } }
+      .x-sec__head { margin-bottom: 40px; }
+      #coleccion { background: var(--x-bg2); }
+      #packs, #contacto { background: var(--x-bg3); }
+      #equipo { background: var(--x-bg); }
+
+      /* catálogo: grilla limpia 2 / 3 / 4 columnas, sin cajas */
+      .x-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 12px; }
+      @media (min-width: 760px) { .x-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 20px; } }
+      @media (min-width: 1180px) { .x-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+      .x-card { background: transparent; border: 0; box-shadow: none; }
+      .x-card__media { aspect-ratio: 3/4; background: var(--x-ph); }
+      .x-card__media img { transition: transform 1s var(--x-ease); }
+      .x-card:hover .x-card__media img { transform: scale(1.05); }
+      .x-card__body { padding: 16px 0 0; gap: 8px; }
+      .x-card__top { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .x-card h3 { font-size: 14px; font-weight: 600; letter-spacing: .06em; }
+      .x-card__desc { font-size: 13px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+      .x-price { font-size: 15px; font-weight: 700; }
+      .x-card .x-btn { min-height: 44px; font-size: 11px; padding: 0 12px; background: transparent; border-color: var(--x-bone); color: var(--x-bone); }
+      .x-card .x-btn:not(.x-btn--ghost) { color: var(--x-bone); }
+      .x-card .x-btn:hover { background: var(--x-bone); color: #fff; }
+      .x-card .x-btn:disabled { border-color: var(--x-line); color: var(--x-dim); background: transparent; }
+      .x-tag { border-radius: 0; font-size: 10px; letter-spacing: .16em; padding: 5px 9px; background: var(--x-orange); border-color: var(--x-orange); }
+      .x-tag--out { background: #fff; border-color: #fff; color: var(--x-bone); }
+      .x-trust { border-top: 1px solid var(--x-line); margin-top: 56px !important; padding-top: 24px !important; }
+      @media (max-width: 520px) { .x-card .x-btn { min-height: 42px; letter-spacing: .08em; } .x-card__desc { display: none; } }
+
+      /* ficha de producto */
+      .x-modal__box { border: 0; border-radius: 0; box-shadow: 0 30px 80px -20px rgba(0,0,0,.55); background: var(--x-bg2); }
+      .x-pd__body { padding: 32px 28px; gap: 18px; }
+      .x-pd__body h2 { font-size: clamp(22px, 3vw, 30px); font-weight: 800; letter-spacing: .02em; line-height: 1.05; }
+      .x-pd__body .x-price { font-size: 22px; }
+      .x-pd__body .x-btn:not(.x-btn--ghost) { width: 100%; min-height: 56px; }
+      .x-gal { background: var(--x-ph); }
+      .x-gal__count { background: rgba(11,11,11,.8); color: #fff; }
+
+      /* carrito y checkout */
+      .x-drawer { background: var(--x-bg2); box-shadow: -16px 0 50px rgba(0,0,0,.3); border-left: 0; }
+      .x-dhead { padding: 12px 12px 12px 24px; }
+      .x-dhead h2 { font-size: 16px; font-weight: 800; letter-spacing: .1em; }
+      .x-dfoot .x-btn { width: 100%; }
+      .x-panel { background: #fff; box-shadow: none; border-color: var(--x-line); }
+      .x-panel h2 { color: var(--x-bone); }
+      .x-scrim { background: rgba(0,0,0,.55); }
+
+      /* lookbook y nosotros: negro con curvas de nivel */
+      #terreno, #nosotros { background: #0b0b0b var(--x-topo) center / cover no-repeat; color: #fff; border-bottom: 0; }
+      #terreno .x-eyebrow, #nosotros .x-eyebrow { color: #e8dcc4; }
+      #nosotros .x-h, #terreno .x-h { color: #fff; }
+      #nosotros .x-about p { color: #cfc8bb; }
+      .x-app #nosotros :focus-visible, .x-app #terreno :focus-visible { outline-color: var(--x-orange); }
+      .x-lb { max-width: 1400px; padding: 0 28px 12px; scroll-padding: 0 28px; gap: 14px; }
+      .x-lb__item { flex-basis: min(78%, 400px); background: #161616; color: #fff; border: 0; box-shadow: none; }
+      .x-lb__item figcaption p { color: #e8dcc4; }
+      .x-lb__item .x-btn--ghost { border-color: rgba(255,255,255,.6); color: #fff; }
+      .x-lb__item .x-btn--ghost:hover { background: var(--x-orange); border-color: var(--x-orange); }
+      .x-mono { background: rgba(255,255,255,.02); border: 1px solid rgba(232,220,196,.18); box-shadow: none; aspect-ratio: 4/3; max-width: 540px; }
+      .x-mono img { width: 76%; filter: none; mix-blend-mode: normal; }
+
+      /* quiz */
+      .x-quizcta { background: var(--x-olive); color: #fff; border: 0; padding: clamp(28px, 4vw, 48px); }
+      .x-quizcta .x-eyebrow { color: #e8dcc4; }
+      .x-quizcta .x-muted { color: #e3e0d2; }
+      .x-quizcta .x-btn:not(.x-btn--ghost) { background: #fff; border-color: #fff; color: #0e0e0e; }
+      .x-quizcta .x-btn:not(.x-btn--ghost):hover { background: var(--x-orange); border-color: var(--x-orange); color: #fff; }
+      .x-quizcta .x-btn--ghost { border-color: #fff; color: #fff; }
+
+      /* footer */
+      .x-foot { background: #0b0b0b; padding: 64px 0 72px; border-top: 3px solid var(--x-orange); }
+      .x-foot__in { align-items: flex-start; }
+      .x-foot__logo { flex: 0 0 100%; min-height: 0 !important; margin-bottom: 12px; }
+      .x-foot__logo img { width: 170px; height: auto; }
+      .x-foot a:hover { color: var(--x-orange); }
+      .x-hero p.x-eyebrow { font-size: 11px; max-width: none; }
+      .x-hero h1 span { line-height: 1.6; }
+      @media (max-width: 700px) { .x-hero img.x-hero__logo { width: 130px; margin-bottom: 18px; } .x-hero h1 { font-size: clamp(38px, 11vw, 56px); } }
+
     </style>
   </head>
   <body>
@@ -578,13 +782,13 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
           </button>
           <a class="x-logo" href="#/" aria-label="Volkarra, inicio"
-            ><img id="siteLogo" src="logo-sello.png" alt="Volkarra"
+            ><img id="siteLogo" src="logo-volkarra-claro.png" alt="Volkarra" width="1036" height="528"
           /></a>
           <nav class="x-nav" aria-label="Principal">
-            <a href="#/coleccion">Founders 001</a>
-            <a href="#/nosotros" class="x-nav__opt">Nosotros</a>
+            <a href="#/">Inicio</a>
+            <a href="#/coleccion">Colección</a>
+            <a href="#/nosotros" class="x-nav__opt">Nuestra historia</a>
             <a href="#/contacto" class="x-nav__opt2">Contacto</a>
-            <a href="#seguimiento">Seguir pedido</a>
           </nav>
           <a class="x-icon" id="acctBtn" href="#cuenta" aria-label="Mi cuenta">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
@@ -601,19 +805,40 @@
           <img id="heroImg" class="x-kb" src="https://jqssfwthrckqykwjwbsg.supabase.co/storage/v1/object/public/products/site/hero.jpg" alt="Prenda Volkarra en terreno volcánico del sur de Chile" fetchpriority="high" />
           <video id="heroVideoDef" src="volkarra-hero-video.mp4" muted loop playsinline preload="metadata" aria-hidden="true" hidden></video>
           <div class="x-hero__copy">
-            <p class="x-eyebrow">La Araucanía · Chile</p>
-            <h1 id="heroTitle">Volkarra <span>Founders Edition 001</span></h1>
-            <p id="heroSub">Outdoor premium nacido en La Araucanía, Chile.</p>
-            <a class="x-btn" href="#/coleccion">Ver colección</a>
+            <img class="x-hero__logo" src="logo-volkarra-claro.png" alt="" width="230" aria-hidden="true" />
+            <p class="x-eyebrow">38°S · Volcanes, bosques y araucarias</p>
+            <h1 id="heroTitle">Nacida en La Araucanía <span>Founders Edition 001 · Ya disponible</span></h1>
+            <p id="heroSub">Ropa outdoor premium para explorar volcanes, bosques y senderos del sur de Chile.</p>
+            <div class="x-hero__ctas"><a class="x-btn" href="#/coleccion">Explorar colección</a><a class="x-btn x-btn--ghost" href="#/founders">Founders 001</a></div>
           </div>
+          <a class="x-hero__scroll" href="#/founders" aria-label="Bajar a Founders 001">Descubre</a>
         </section>
 
         <section class="x-bn" id="banners" aria-roledescription="carrusel" aria-label="Novedades" hidden></section>
 
         <section class="x-strip" aria-label="Founders 001">
-          <div class="x-strip__in">
-            <div class="x-strip__badge"><img src="https://jqssfwthrckqykwjwbsg.supabase.co/storage/v1/object/public/products/site/founders-badge.jpg" alt="Insignia Founders 001" loading="lazy" decoding="async" /></div>
-            <p><strong>Founders 001</strong>Primera cápsula limitada y numerada. Cada prenda lleva etiqueta interior “FOUNDERS 001 — LA ARAUCANÍA” y tarjeta numerada.</p>
+          <div class="x-marquee" aria-hidden="true"><div class="x-marquee__track"><span>Founders 001</span><span>Edición limitada y numerada</span><span>Envíos a todo Chile</span><span>Nacida en La Araucanía</span><span>10 días para arrepentirte</span><span>Founders 001</span><span>Edición limitada y numerada</span><span>Envíos a todo Chile</span><span>Nacida en La Araucanía</span><span>10 días para arrepentirte</span></div></div>
+        </section>
+
+        <section class="x-fd" id="founders" aria-labelledby="foundersH">
+          <div class="x-wrap x-fd__in">
+            <div class="x-fd__media">
+              <img src="lookbook-poleron.jpg" alt="Polerón Volkarra frente al volcán Lonquimay entre araucarias" loading="lazy" decoding="async" />
+              <img src="lookbook-beanie.jpg" alt="Beanie Volkarra en un mirador nevado frente a un volcán" loading="lazy" decoding="async" />
+              <span class="x-fd__num" aria-hidden="true">001</span>
+            </div>
+            <div>
+              <p class="x-eyebrow">Colección de lanzamiento</p>
+              <h2 id="foundersH">Founders <em>001</em></h2>
+              <p>La primera colección de Volkarra. Una cápsula corta, limitada y numerada, pensada en los senderos de La Araucanía: prendas simples y resistentes que aguantan la lluvia del sur y se ven bien de vuelta en la ciudad.</p>
+              <p>Quien la lleva es parte del comienzo de la marca.</p>
+              <ul>
+                <li>Edición <b>Limitada y numerada</b></li>
+                <li>Etiqueta <b>Founders 001 · La Araucanía</b></li>
+                <li>Despacho <b>A todo Chile</b></li>
+              </ul>
+              <a class="x-btn" href="#/coleccion">Ver los productos</a>
+            </div>
           </div>
         </section>
 
@@ -621,8 +846,8 @@
           <div class="x-wrap">
             <div class="x-sec__head">
               <div>
-                <p class="x-eyebrow">Cápsula limitada</p>
-                <h2 class="x-h">Founders 001</h2>
+                <p class="x-eyebrow">Founders 001 · Cápsula limitada</p>
+                <h2 class="x-h">Colección</h2>
               </div>
             </div>
             <div class="x-chips x-cats" id="cats" role="group" aria-label="Filtrar por categoría" hidden></div>
@@ -695,18 +920,12 @@
 
         <section class="x-sec" id="nosotros">
           <div class="x-wrap x-about">
-            <div class="x-mono"><img src="https://jqssfwthrckqykwjwbsg.supabase.co/storage/v1/object/public/products/site/logo-v.jpg" alt="Monograma V de Volkarra" loading="lazy" decoding="async" /></div>
+            <div class="x-mono"><img src="logo-volkarra-claro.png" alt="Logo Volkarra" loading="lazy" decoding="async" /></div>
             <div>
-              <p class="x-eyebrow">Nosotros</p>
+              <p class="x-eyebrow">Nuestra historia</p>
               <h2 class="x-h">Nacido del trekking y los volcanes del sur</h2>
               <p>Volkarra nace de caminar los senderos y volcanes del sur de Chile. Hacemos ropa simple, resistente y hecha para el terreno: prendas que aguantan la lluvia de La Araucanía y se ven bien de vuelta en la ciudad.</p>
-              <p>Una paleta corta, sacada del paisaje: negro, arena, oliva y hueso.</p>
-              <div class="x-palette" aria-label="Paleta Volkarra">
-                <span><i style="background:#0E0E0E"></i>Negro</span>
-                <span><i style="background:#E8DCC4"></i>Arena</span>
-                <span><i style="background:#5B6B3A"></i>Oliva</span>
-                <span><i style="background:#F5F0E6"></i>Hueso</span>
-              </div>
+              <p>Negro volcán, arena, oliva de bosque y un toque de naranjo: los colores del paisaje donde nace la marca.</p>
             </div>
           </div>
         </section>
@@ -1012,6 +1231,7 @@
 
       <footer class="x-foot" id="foot">
         <div class="x-wrap x-foot__in">
+          <a class="x-foot__logo" href="#/" aria-label="Volkarra, inicio"><img src="logo-volkarra-claro.png" alt="Volkarra" width="170" loading="lazy" /></a>
           <p id="footText">© 2026 Volkarra · Matías Sepúlveda · Victoria, La Araucanía, Chile</p>
           <div style="display:flex;flex-wrap:wrap;gap:0 20px;align-items:center">
             <a href="#seguimiento">Seguir pedido</a>
@@ -1032,8 +1252,10 @@
           <button class="x-icon" type="button" data-close aria-label="Cerrar menú">✕</button>
         </div>
         <nav aria-label="Menú principal">
-          <a href="#/coleccion">Founders 001</a>
-          <a href="#/nosotros">Nosotros</a>
+          <a href="#/">Inicio</a>
+          <a href="#/coleccion">Colección</a>
+          <a href="#/founders">Founders 001</a>
+          <a href="#/nosotros">Nuestra historia</a>
           <a href="#/contacto">Contacto</a>
           <a href="#seguimiento">Seguir pedido</a>
           <a href="#cuenta">Mi cuenta</a>
@@ -2570,7 +2792,7 @@ function cooldown(btn, label) {
 }
 const acctHead = (title, sub) => h('div', null, h('p', { class: 'x-eyebrow', text: 'Mi cuenta' }), h('h1', { class: 'x-h', text: title }), sub ? h('p', { class: 'x-muted', style: 'margin:0' }, sub) : null);
 const errP = () => h('p', { class: 'x-msg x-msg--err', role: 'alert' });
-function flashP() { const t = A.flash; A.flash = ''; return t ? h('p', { class: 'x-msg x-msg--ok', role: 'status', text: t }) : null; }
+function flashP() { const t = A.flash; A.flash = ''; return t ? h('p', { class: 'x-msg x-msg--ok', role: 'status', text: t }) : ''; }
 function busy(btn, on, label) { btn.disabled = on; btn.textContent = label; }
 function afterSignIn() {
   updateAcctIcon();
